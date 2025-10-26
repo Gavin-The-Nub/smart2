@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { ChevronDown, User, LogOut } from "lucide-react";
 import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
 import { MobileMenu } from "./MobileMenu";
-import { useAuth } from "../hooks/useAuth";
+
 import { Button } from "./ui/button";
 
 const NAV_ITEMS = [
@@ -48,13 +48,25 @@ const NAV_ITEMS = [
 ];
 
 export function Header() {
+  // Mock auth data for demo - REMOVE WHEN REAL AUTH ADDED
+  const user = {
+    id: "demo-user-1",
+    email: "demo.user@example.com",
+  };
+  const profile = {
+    full_name: "Demo User",
+    role: "student",
+  };
+  const signOut = () => {
+    alert("Signed out (mock)");
+  };
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [dropdownPinned, setDropdownPinned] = useState<number | null>(null);
   const dropdownRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState<number | null>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
-  const { user, profile, signOut } = useAuth();
+
   useBodyScrollLock(mobileOpen);
 
   // Trap focus inside mobile menu when open

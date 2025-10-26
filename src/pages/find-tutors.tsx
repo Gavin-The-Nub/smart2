@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { FiltersBar } from "../components/tutors/FiltersBar";
-import { TutorCard } from "../components/tutors/TutorCard";
+
 import { Reveal } from "../components/animations/Reveal";
 import { Header } from "../components/Header";
 import Footer from "../components/Footer";
@@ -19,6 +18,45 @@ type Tutor = {
   bio?: string;
   avatar_url?: string;
 };
+
+// Mock FiltersBar component
+const FiltersBar = ({ filters, onChange, onMoreFilters }: any) => (
+  <div className="mb-4 flex flex-col sm:flex-row gap-2 items-center">
+    <input
+      type="text"
+      placeholder="Search tutors..."
+      value={filters.search}
+      onChange={(e) => onChange("search", e.target.value)}
+      className="border rounded-lg px-3 py-2 text-base"
+    />
+    <button
+      type="button"
+      className="ml-2 px-3 py-2 text-base bg-blue-600 text-white rounded-lg"
+      onClick={onMoreFilters}
+    >
+      More Filters
+    </button>
+  </div>
+);
+
+// Mock TutorCard component
+const TutorCard = ({ tutor }: any) => (
+  <div className="rounded-lg border px-6 py-4 flex gap-6 bg-white shadow-sm">
+    <div className="w-16 h-16 bg-blue-100 flex items-center justify-center rounded-full">
+      <span className="text-xl font-bold text-blue-600">
+        {tutor.full_name
+          .split(" ")
+          .map((n: any) => n[0])
+          .join("")}
+      </span>
+    </div>
+    <div className="flex-1">
+      <div className="font-bold text-lg">{tutor.full_name}</div>
+      <div className="text-sm text-gray-600">{tutor.email}</div>
+      <div className="text-gray-700 mt-1">{tutor.bio}</div>
+    </div>
+  </div>
+);
 
 export default function FindTutors() {
   const [tutors, setTutors] = useState<Tutor[]>([]);
