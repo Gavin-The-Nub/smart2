@@ -21,8 +21,6 @@ import NotFound from "./pages/NotFound";
 import FindTutors from "./pages/find-tutors";
 import Auth from "./pages/Auth";
 
-import { RoleGuard } from "@/components/RoleGuard";
-
 import { ThemeProvider } from "next-themes";
 
 const App = () => (
