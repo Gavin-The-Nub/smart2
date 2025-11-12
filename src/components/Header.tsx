@@ -23,7 +23,6 @@ const NAV_ITEMS = [
     dropdown: [
       { label: "Services", href: "/services" },
       { label: "Pricing & Credits", href: "/pricing" },
-      { label: "How It Works", href: "/how-it-works" },
     ],
   },
   {
@@ -38,7 +37,7 @@ const NAV_ITEMS = [
     label: "Support",
     href: "#",
     dropdown: [
-      { label: "Contact", href: "legal/contact" },
+      { label: "Contact", href: "/contact" },
       { label: "Terms", href: "legal/terms" },
       { label: "Privacy", href: "legal/privacy" },
       { label: "Refund", href: "legal/refund" },
@@ -48,15 +47,9 @@ const NAV_ITEMS = [
 ];
 
 export function Header() {
-  // Mock auth data for demo - REMOVE WHEN REAL AUTH ADDED
-  const user = {
-    id: "demo-user-1",
-    email: "demo.user@example.com",
-  };
-  const profile = {
-    full_name: "Demo User",
-    role: "student",
-  };
+  // Auth state - will be replaced with real auth
+  const user = null;
+  const profile = null;
   const signOut = () => {
     alert("Signed out (mock)");
   };
