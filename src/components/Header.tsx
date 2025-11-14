@@ -339,20 +339,20 @@ export function Header() {
             </div>
           ) : (
             <>
-              <Link
-                to="/auth"
+              <a
+                href="https://app.smartbrainlearning.org/"
                 className="inline-flex items-center justify-center h-10 px-4 rounded-full text-sm font-medium border border-slate-300 text-slate-900 bg-white hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-400"
                 style={{ minWidth: 44 }}
               >
                 Log In
-              </Link>
-              <Link
-                to="/auth"
+              </a>
+              <a
+                href="https://app.smartbrainlearning.org/"
                 className="inline-flex items-center justify-center h-10 px-4 rounded-full text-sm font-medium bg-[#2563EB] text-white hover:bg-[#1d4ed8] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-slate-400"
                 style={{ minWidth: 44 }}
               >
                 Sign Up
-              </Link>
+              </a>
             </>
           )}
         </div>
