@@ -1,12 +1,28 @@
 import LottieBlock from "@/components/LottieBlock";
 import { useState, useEffect } from "react";
 import React from "react";
+import { useGeolocation } from "@/hooks/useGeolocation";
+import { supabase } from "@/lib/supabase";
 
 // FAQ Disclosure component (clone of template's accordion/disclosure pattern)
 interface FaqDisclosureProps {
   idx: number;
   q: string;
   a: string;
+}
+
+interface CreditPlan {
+  id: string;
+  slug: string;
+  name: string;
+  credits: number;
+  price_usd?: number;
+  price_php?: number;
+  hours?: number;
+  price_per_hour?: number;
+  price_per_credit?: number;
+  description?: string;
+  region: string;
 }
 
 const FaqDisclosure: React.FC<FaqDisclosureProps> = ({ idx, q, a }) => {
@@ -75,6 +91,9 @@ import {
 
 const Index = () => {
   const [inViewport, setInViewport] = useState(false);
+  const [creditPlans, setCreditPlans] = useState<CreditPlan[]>([]);
+  const [loadingPlans, setLoadingPlans] = useState(true);
+  const { location } = useGeolocation();
 
   const handleScroll = () => {
     const elements = document.getElementsByClassName("counterUp");
@@ -94,6 +113,34 @@ const Index = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // Fetch credit plans based on user location
+  useEffect(() => {
+    const fetchCreditPlans = async () => {
+      try {
+        if (!location) return;
+
+        // Determine region: PH for Philippines, US for everything else
+        const region = location.country === "PH" ? "PH" : "US";
+
+        const { data, error } = await supabase
+          .from("credit_plans")
+          .select("*")
+          .eq("region", region)
+          .eq("is_active", true)
+          .order("sort_order", { ascending: true });
+
+        if (error) throw error;
+        setCreditPlans(data || []);
+      } catch (err) {
+        console.error("Error fetching credit plans:", err);
+      } finally {
+        setLoadingPlans(false);
+      }
+    };
+
+    fetchCreditPlans();
+  }, [location]);
 
   return (
     <>
@@ -417,277 +464,141 @@ const Index = () => {
               Buy credits to book tutoring sessions that fit your child's needs.
               Every enrollment helps fund sponsorships for learners in need.
             </p>
+            {location && (
+              <p className="text-sm text-blueGray-500 mt-2">
+                Showing prices for: {location.country === "PH" ? "Philippines" : "United States"}
+              </p>
+            )}
           </div>
-          <div className="flex flex-wrap -mx-3">
-            <div className="w-full md:w-1/2 lg:w-1/3 px-3 mb-6">
-              <div className="hover-up-5 pt-16 pb-8 px-4 text-center bg-white rounded shadow">
-                <img
-                  className="h-20 mb-6 mx-auto"
-                  src="/vendor/monst/img/icons/startup.svg"
-                  alt="Starter"
-                />
-                <h3 className="mb-2 text-4xl font-bold font-heading">
-                  Starter
-                </h3>
-                <span className="text-4xl text-blue-500 font-bold font-heading">
-                  From $30 / session (US)
-                </span>
-                <p className="mt-2 mb-8 text-blueGray-400">
-                  Ideal for trials & short-term
-                </p>
-                <div className="flex flex-col items-center mb-8">
-                  <ul className="text-blueGray-400">
-                    <li className="flex mb-3">
-                      <svg
-                        className="w-6 h-6 mr-2 text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span>
-                        US Starter Pack: 6 credits (3 hrs) — $75 (~$25/hr)
-                      </span>
-                    </li>
-                    <li className="flex mb-3">
-                      <svg
-                        className="w-6 h-6 mr-2 text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span>PH Starter: 5 credits — ₱750 (₱150/credit)</span>
-                    </li>
-                    <li className="flex">
-                      <svg
-                        className="w-6 h-6 mr-2 text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span>1:1 tutoring — 30 or 60 minutes</span>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <a
-                    className="block sm:inline-block py-4 px-6 mb-4 sm:mb-0 sm:mr-3 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded"
-                    href="#"
-                  >
-                    Start Free Trial
-                  </a>
-                  <a
-                    className="block sm:inline-block py-4 px-6 text-xs text-blueGray-500 hover:text-blueGray-600 text-center font-semibold leading-none bg-white border border-blueGray-200 hover:border-blueGray-300 rounded"
-                    href="#"
-                  >
-                    Purchase
-                  </a>
-                </div>
-              </div>
+          
+          {loadingPlans ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+              <p className="text-sm text-gray-600 mt-2">Loading credit plans...</p>
             </div>
-            <div className="w-full md:w-1/2 lg:w-1/3 px-3 mb-6">
-              <div className="hover-up-5 pt-16 pb-8 px-4 text-center text-white bg-blue-500 rounded shadow relative">
-                <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-yellow-400 text-yellow-900 text-xs font-semibold px-3 py-1 rounded-full">
-                    Most Popular
-                  </span>
-                </div>
-                <img
-                  className="h-20 mb-6 mx-auto"
-                  src="/vendor/monst/img/icons/agency.svg"
-                  alt="Standard"
-                />
-                <h3 className="mb-2 text-4xl font-bold font-heading">
-                  Standard
-                </h3>
-                <span className="text-4xl font-bold font-heading">
-                  Ongoing support — best value
-                </span>
-                <p className="mt-2 mb-8">Family & small-group friendly</p>
-                <div className="flex flex-col items-center mb-8">
-                  <ul>
-                    <li className="flex items-center mb-3">
-                      <svg
-                        className="w-6 h-6 mr-2 text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span>US: 12 credits (6 hrs) — $132 (~$22/hr)</span>
-                    </li>
-                    <li className="flex items-center mb-3">
-                      <svg
-                        className="w-6 h-6 mr-2 text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span>Progress dashboard & priority booking</span>
-                    </li>
-                    <li className="flex items-center">
-                      <svg
-                        className="w-6 h-6 mr-2 text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span>Test prep & ESL options</span>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <a
-                    className="block sm:inline-block py-4 px-6 mb-4 sm:mb-0 sm:mr-3 text-xs text-blue-500 font-semibold leading-none bg-white hover:bg-blueGray-50 rounded"
-                    href="#"
-                  >
-                    Start Free Trial
-                  </a>
-                  <a
-                    className="block sm:inline-block py-4 px-6 text-xs font-semibold leading-none border border-blue-400 hover:border-blue-400 rounded"
-                    href="#"
-                  >
-                    Purchase
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="w-full lg:w-1/3 px-3 mb-6">
-              <div className="hover-up-5 pt-16 pb-8 px-4 text-center bg-white rounded shadow">
-                <img
-                  className="h-20 mb-6 mx-auto"
-                  src="/vendor/monst/img/icons/enterprise.svg"
-                  alt="Family"
-                />
-                <h3 className="mb-2 text-4xl font-bold font-heading">Family</h3>
-                <span className="text-4xl text-blue-500 font-bold font-heading">
-                  Save more — siblings & groups
-                </span>
-                <p className="mt-2 mb-8 text-blueGray-400">
-                  Bulk credits, shared
-                </p>
-                <div className="flex flex-col items-center mb-8">
-                  <ul className="text-blueGray-400">
-                    <li className="flex mb-3">
-                      <svg
-                        className="w-6 h-6 mr-2 text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span>
-                        US Family: 20 credits (10 hrs) — $180 (~$18/hr)
+          ) : creditPlans.length > 0 ? (
+            <div className="flex flex-wrap -mx-3">
+              {creditPlans.map((plan, idx) => {
+                const isPopular = idx === 1 || creditPlans.length === 1;
+                const price = location?.country === "PH" ? plan.price_php : plan.price_usd;
+                const currency = location?.country === "PH" ? "₱" : "$";
+                
+                return (
+                  <div key={plan.id} className="w-full md:w-1/2 lg:w-1/3 px-3 mb-6">
+                    <div className={`hover-up-5 pt-16 pb-8 px-4 text-center rounded shadow relative ${
+                      isPopular 
+                        ? "text-white bg-blue-500" 
+                        : "bg-white"
+                    }`}>
+                      {isPopular && (
+                        <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
+                          <span className="bg-yellow-400 text-yellow-900 text-xs font-semibold px-3 py-1 rounded-full">
+                            Most Popular
+                          </span>
+                        </div>
+                      )}
+                      <img
+                        className="h-20 mb-6 mx-auto"
+                        src={idx === 0 ? "/vendor/monst/img/icons/startup.svg" : idx === 1 ? "/vendor/monst/img/icons/agency.svg" : "/vendor/monst/img/icons/enterprise.svg"}
+                        alt={plan.name}
+                      />
+                      <h3 className={`mb-2 text-4xl font-bold font-heading ${isPopular ? "text-white" : ""}`}>
+                        {plan.name}
+                      </h3>
+                      <span className={`text-4xl font-bold font-heading ${isPopular ? "text-white" : "text-blue-500"}`}>
+                        {currency}{price?.toFixed(2)}
                       </span>
-                    </li>
-                    <li className="flex mb-3">
-                      <svg
-                        className="w-6 h-6 mr-2 text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span>
-                        US Family Plus: 30 credits (15 hrs) — $450 (~$15/hr)
-                      </span>
-                    </li>
-                    <li className="flex">
-                      <svg
-                        className="w-6 h-6 mr-2 text-green-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path>
-                      </svg>
-                      <span>PH Family: 40 credits — ₱5,000 (₱125/credit)</span>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <a
-                    className="block sm:inline-block py-4 px-6 mb-4 sm:mb-0 sm:mr-3 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded"
-                    href="#"
-                  >
-                    Start Free Trial
-                  </a>
-                  <a
-                    className="block sm:inline-block py-4 px-6 text-xs text-blueGray-500 hover:text-blueGray-600 text-center font-semibold leading-none bg-white border border-blueGray-200 hover:border-blueGray-300 rounded"
-                    href="#"
-                  >
-                    Purchase
-                  </a>
-                </div>
-              </div>
+                      <p className={`mt-2 mb-8 ${isPopular ? "text-white" : "text-blueGray-400"}`}>
+                        {plan.credits} credits {plan.hours && `(${plan.hours} hrs)`}
+                      </p>
+                      <div className="flex flex-col items-center mb-8">
+                        <ul className={isPopular ? "text-white" : "text-blueGray-400"}>
+                          <li className="flex items-center mb-3">
+                            <svg
+                              className="w-6 h-6 mr-2 text-green-500"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              ></path>
+                            </svg>
+                            <span>{plan.description || `${plan.credits} credits for tutoring`}</span>
+                          </li>
+                          <li className="flex items-center mb-3">
+                            <svg
+                              className="w-6 h-6 mr-2 text-green-500"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              ></path>
+                            </svg>
+                            <span>{plan.price_per_credit ? `${currency}${plan.price_per_credit.toFixed(2)}/credit` : "Flexible pricing"}</span>
+                          </li>
+                          <li className="flex items-center">
+                            <svg
+                              className="w-6 h-6 mr-2 text-green-500"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              ></path>
+                            </svg>
+                            <span>1:1 tutoring — 30 or 60 minutes</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div>
+                        <a
+                          className={`block sm:inline-block py-4 px-6 mb-4 sm:mb-0 sm:mr-3 text-xs font-semibold leading-none rounded ${
+                            isPopular
+                              ? "text-blue-500 bg-white hover:bg-blueGray-50"
+                              : "text-white bg-blue-400 hover:bg-blue-500"
+                          }`}
+                          href="#"
+                        >
+                          Start Free Trial
+                        </a>
+                        <a
+                          className={`block sm:inline-block py-4 px-6 text-xs font-semibold leading-none rounded ${
+                            isPopular
+                              ? "border border-blue-400 hover:border-blue-400"
+                              : "text-blueGray-500 hover:text-blueGray-600 bg-white border border-blueGray-200 hover:border-blueGray-300"
+                          }`}
+                          href="#"
+                        >
+                          Purchase
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500">Allow permission to your location to see pricing plans.</p>
+            </div>
+          )}
+          
           <div className="text-center mt-8">
             <p className="text-sm text-blueGray-400">
               1 credit = 30 minutes. Sessions available in 30 or 60 minutes.

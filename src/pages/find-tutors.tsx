@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Reveal } from "../components/animations/Reveal";
 import { Header } from "../components/Header";
 import Footer from "../components/Footer";
+import { supabase } from "../lib/supabase";
 
 const sortOptions = [
   { value: "popularity", label: "Popularity" },
@@ -11,12 +12,12 @@ const sortOptions = [
 ];
 
 type Tutor = {
-  id: string;
+  id: number;
   user_id: string;
-  full_name: string;
+  name: string;
   email: string;
   bio?: string;
-  avatar_url?: string;
+  photo_url?: string;
 };
 
 // Mock FiltersBar component
@@ -44,14 +45,14 @@ const TutorCard = ({ tutor }: any) => (
   <div className="rounded-lg border px-6 py-4 flex gap-6 bg-white shadow-sm">
     <div className="w-16 h-16 bg-blue-100 flex items-center justify-center rounded-full">
       <span className="text-xl font-bold text-blue-600">
-        {tutor.full_name
+        {tutor.name
           .split(" ")
           .map((n: any) => n[0])
           .join("")}
       </span>
     </div>
     <div className="flex-1">
-      <div className="font-bold text-lg">{tutor.full_name}</div>
+      <div className="font-bold text-lg">{tutor.name}</div>
       <div className="text-sm text-gray-600">{tutor.email}</div>
       <div className="text-gray-700 mt-1">{tutor.bio}</div>
     </div>
@@ -67,57 +68,18 @@ export default function FindTutors() {
     sort: "popularity",
   });
 
-  // Load tutors from mock data
+  // Load tutors from database
   useEffect(() => {
     const loadTutors = async () => {
       try {
-        // Simulate loading
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        const { data, error: fetchError } = await supabase
+          .from("Tutors")
+          .select("id, user_id, name, email, bio, photo_url")
+          .eq("application_status", true);
 
-        const mockTutors: Tutor[] = [
-          {
-            id: "tutor-1",
-            user_id: "user-1",
-            full_name: "Dr. Sarah Johnson",
-            email: "sarah@example.com",
-            bio: "Mathematics professor with 10+ years of experience teaching calculus, algebra, and statistics.",
-            avatar_url: undefined,
-          },
-          {
-            id: "tutor-2",
-            user_id: "user-2",
-            full_name: "Prof. Michael Chen",
-            email: "michael@example.com",
-            bio: "Physics expert specializing in quantum mechanics, thermodynamics, and classical mechanics.",
-            avatar_url: undefined,
-          },
-          {
-            id: "tutor-3",
-            user_id: "user-3",
-            full_name: "Dr. Emily Rodriguez",
-            email: "emily@example.com",
-            bio: "Chemistry tutor with focus on organic chemistry, biochemistry, and analytical chemistry.",
-            avatar_url: undefined,
-          },
-          {
-            id: "tutor-4",
-            user_id: "user-4",
-            full_name: "Prof. David Kim",
-            email: "david@example.com",
-            bio: "Computer Science instructor specializing in programming, algorithms, and data structures.",
-            avatar_url: undefined,
-          },
-          {
-            id: "tutor-5",
-            user_id: "user-5",
-            full_name: "Dr. Lisa Thompson",
-            email: "lisa@example.com",
-            bio: "Biology professor with expertise in molecular biology, genetics, and cell biology.",
-            avatar_url: undefined,
-          },
-        ];
+        if (fetchError) throw fetchError;
 
-        setTutors(mockTutors);
+        setTutors(data || []);
       } catch (err) {
         console.error("Error loading tutors:", err);
         setError(err instanceof Error ? err.message : "Failed to load tutors");
@@ -139,7 +101,7 @@ export default function FindTutors() {
     if (filters.search) {
       t = t.filter(
         (tutor) =>
-          tutor.full_name
+          tutor.name
             .toLowerCase()
             .includes(filters.search.toLowerCase()) ||
           (tutor.bio &&
@@ -148,7 +110,7 @@ export default function FindTutors() {
     }
     // Sorting
     if (filters.sort === "name")
-      t.sort((a, b) => a.full_name.localeCompare(b.full_name));
+      t.sort((a, b) => a.name.localeCompare(b.name));
     else if (filters.sort === "newest") t = t.slice().reverse();
     // Popularity is default (no-op)
     return t;
