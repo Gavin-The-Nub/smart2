@@ -74,8 +74,7 @@ export default function FindTutors() {
       try {
         const { data, error: fetchError } = await supabase
           .from("Tutors")
-          .select("id, user_id, name, email, bio, photo_url")
-          .eq("application_status", true);
+          .select("id, user_id, name, email, bio, photo_url");
 
         if (fetchError) throw fetchError;
 
