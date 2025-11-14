@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Header } from '../components/Header';
 import Footer from '../components/Footer';
 import { Reveal } from '../components/animations/Reveal';
@@ -7,7 +8,7 @@ import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Label } from '../components/ui/label';
-import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Youtube, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -17,11 +18,52 @@ export default function Contact() {
     category: '',
     message: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Initialize EmailJS on component mount
+  React.useEffect(() => {
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    if (publicKey) {
+      emailjs.init(publicKey);
+    }
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    setIsLoading(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const templateParams = {
+        to_email: import.meta.env.VITE_EMAILJS_TO_EMAIL,
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone || 'Not provided',
+        category: formData.category,
+        message: formData.message,
+      };
+
+      const response = await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams
+      );
+
+      if (response.status === 200) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', phone: '', category: '', message: '' });
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to send message. Please try again.');
+      console.error('Email send error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -68,6 +110,20 @@ export default function Contact() {
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {submitStatus === 'success' && (
+                    <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                      <p className="text-green-800 font-medium">Message sent successfully! We'll get back to you soon.</p>
+                    </div>
+                  )}
+
+                  {submitStatus === 'error' && (
+                    <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+                      <p className="text-red-800 font-medium">{errorMessage}</p>
+                    </div>
+                  )}
+
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">Name *</Label>
@@ -78,6 +134,7 @@ export default function Contact() {
                         value={formData.name}
                         onChange={(e) => handleInputChange('name', e.target.value)}
                         required
+                        disabled={isLoading}
                         className="h-12"
                       />
                     </div>
@@ -90,6 +147,7 @@ export default function Contact() {
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
                         required
+                        disabled={isLoading}
                         className="h-12"
                       />
                     </div>
@@ -104,12 +162,13 @@ export default function Contact() {
                         placeholder="(555) 123-4567"
                         value={formData.phone}
                         onChange={(e) => handleInputChange('phone', e.target.value)}
+                        disabled={isLoading}
                         className="h-12"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="category">I am a... *</Label>
-                      <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
+                      <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)} disabled={isLoading}>
                         <SelectTrigger className="h-12">
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
@@ -132,15 +191,17 @@ export default function Contact() {
                       value={formData.message}
                       onChange={(e) => handleInputChange('message', e.target.value)}
                       required
+                      disabled={isLoading}
                       className="min-h-[120px]"
                     />
                   </div>
 
                   <Button 
                     type="submit"
-                    className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                    disabled={isLoading}
+                    className="w-full h-12 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed"
                   >
-                    Send Message
+                    {isLoading ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               </div>
