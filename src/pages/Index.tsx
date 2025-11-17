@@ -466,30 +466,37 @@ const Index = () => {
             </p>
             {location && (
               <p className="text-sm text-blueGray-500 mt-2">
-                Showing prices for: {location.country === "PH" ? "Philippines" : "United States"}
+                Showing prices for:{" "}
+                {location.country === "PH" ? "Philippines" : "United States"}
               </p>
             )}
           </div>
-          
+
           {loadingPlans ? (
             <div className="text-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="text-sm text-gray-600 mt-2">Loading credit plans...</p>
+              <p className="text-sm text-gray-600 mt-2">
+                Loading credit plans...
+              </p>
             </div>
           ) : creditPlans.length > 0 ? (
             <div className="flex flex-wrap -mx-3">
               {creditPlans.map((plan, idx) => {
                 const isPopular = idx === 1 || creditPlans.length === 1;
-                const price = location?.country === "PH" ? plan.price_php : plan.price_usd;
+                const price =
+                  location?.country === "PH" ? plan.price_php : plan.price_usd;
                 const currency = location?.country === "PH" ? "₱" : "$";
-                
+
                 return (
-                  <div key={plan.id} className="w-full md:w-1/2 lg:w-1/3 px-3 mb-6">
-                    <div className={`hover-up-5 pt-16 pb-8 px-4 text-center rounded shadow relative ${
-                      isPopular 
-                        ? "text-white bg-blue-500" 
-                        : "bg-white"
-                    }`}>
+                  <div
+                    key={plan.id}
+                    className="w-full md:w-1/2 lg:w-1/3 px-3 mb-6"
+                  >
+                    <div
+                      className={`hover-up-5 pt-16 pb-8 px-4 text-center rounded shadow relative ${
+                        isPopular ? "text-white bg-blue-500" : "bg-white"
+                      }`}
+                    >
                       {isPopular && (
                         <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
                           <span className="bg-yellow-400 text-yellow-900 text-xs font-semibold px-3 py-1 rounded-full">
@@ -499,20 +506,44 @@ const Index = () => {
                       )}
                       <img
                         className="h-20 mb-6 mx-auto"
-                        src={idx === 0 ? "/vendor/monst/img/icons/startup.svg" : idx === 1 ? "/vendor/monst/img/icons/agency.svg" : "/vendor/monst/img/icons/enterprise.svg"}
+                        src={
+                          idx === 0
+                            ? "/vendor/monst/img/icons/startup.svg"
+                            : idx === 1
+                            ? "/vendor/monst/img/icons/agency.svg"
+                            : "/vendor/monst/img/icons/enterprise.svg"
+                        }
                         alt={plan.name}
                       />
-                      <h3 className={`mb-2 text-4xl font-bold font-heading ${isPopular ? "text-white" : ""}`}>
+                      <h3
+                        className={`mb-2 text-4xl font-bold font-heading ${
+                          isPopular ? "text-white" : ""
+                        }`}
+                      >
                         {plan.name}
                       </h3>
-                      <span className={`text-4xl font-bold font-heading ${isPopular ? "text-white" : "text-blue-500"}`}>
-                        {currency}{price?.toFixed(2)}
+                      <span
+                        className={`text-4xl font-bold font-heading ${
+                          isPopular ? "text-white" : "text-blue-500"
+                        }`}
+                      >
+                        {currency}
+                        {price?.toFixed(2)}
                       </span>
-                      <p className={`mt-2 mb-8 ${isPopular ? "text-white" : "text-blueGray-400"}`}>
-                        {plan.credits} credits {plan.hours && `(${plan.hours} hrs)`}
+                      <p
+                        className={`mt-2 mb-8 ${
+                          isPopular ? "text-white" : "text-blueGray-400"
+                        }`}
+                      >
+                        {plan.credits} credits{" "}
+                        {plan.hours && `(${plan.hours} hrs)`}
                       </p>
                       <div className="flex flex-col items-center mb-8">
-                        <ul className={isPopular ? "text-white" : "text-blueGray-400"}>
+                        <ul
+                          className={
+                            isPopular ? "text-white" : "text-blueGray-400"
+                          }
+                        >
                           <li className="flex items-center mb-3">
                             <svg
                               className="w-6 h-6 mr-2 text-green-500"
@@ -528,7 +559,10 @@ const Index = () => {
                                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                               ></path>
                             </svg>
-                            <span>{plan.description || `${plan.credits} credits for tutoring`}</span>
+                            <span>
+                              {plan.description ||
+                                `${plan.credits} credits for tutoring`}
+                            </span>
                           </li>
                           <li className="flex items-center mb-3">
                             <svg
@@ -545,7 +579,13 @@ const Index = () => {
                                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                               ></path>
                             </svg>
-                            <span>{plan.price_per_credit ? `${currency}${plan.price_per_credit.toFixed(2)}/credit` : "Flexible pricing"}</span>
+                            <span>
+                              {plan.price_per_credit
+                                ? `${currency}${plan.price_per_credit.toFixed(
+                                    2
+                                  )}/credit`
+                                : "Flexible pricing"}
+                            </span>
                           </li>
                           <li className="flex items-center">
                             <svg
@@ -595,10 +635,12 @@ const Index = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-500">Allow permission to your location to see pricing plans.</p>
+              <p className="text-gray-500">
+                Allow permission to your location to see pricing plans.
+              </p>
             </div>
           )}
-          
+
           <div className="text-center mt-8">
             <p className="text-sm text-blueGray-400">
               1 credit = 30 minutes. Sessions available in 30 or 60 minutes.
