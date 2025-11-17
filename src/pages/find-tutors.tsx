@@ -53,7 +53,6 @@ const TutorCard = ({ tutor }: any) => (
     </div>
     <div className="flex-1">
       <div className="font-bold text-lg">{tutor.name}</div>
-      <div className="text-sm text-gray-600">{tutor.email}</div>
       <div className="text-gray-700 mt-1">{tutor.bio}</div>
     </div>
   </div>
