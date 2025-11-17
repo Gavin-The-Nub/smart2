@@ -480,159 +480,182 @@ const Index = () => {
               </p>
             </div>
           ) : creditPlans.length > 0 ? (
-            <div className="flex flex-wrap -mx-3">
-              {creditPlans.map((plan, idx) => {
-                const isPopular = idx === 1 || creditPlans.length === 1;
-                const price =
-                  location?.country === "PH" ? plan.price_php : plan.price_usd;
-                const currency = location?.country === "PH" ? "₱" : "$";
+            <>
+              <div className="flex flex-wrap -mx-3">
+                {creditPlans
+                  .filter(
+                    (plan) =>
+                      !plan.name.toLowerCase().includes("family") &&
+                      !plan.slug.toLowerCase().includes("family")
+                  )
+                  .map((plan, idx) => {
+                    const filteredPlans = creditPlans.filter(
+                      (p) =>
+                        !p.name.toLowerCase().includes("family") &&
+                        !p.slug.toLowerCase().includes("family")
+                    );
+                    const isPopular = idx === 1 || filteredPlans.length === 1;
+                    const price =
+                      location?.country === "PH"
+                        ? plan.price_php
+                        : plan.price_usd;
+                    const currency = location?.country === "PH" ? "₱" : "$";
 
-                return (
-                  <div
-                    key={plan.id}
-                    className="w-full md:w-1/2 lg:w-1/3 px-3 mb-6"
-                  >
-                    <div
-                      className={`hover-up-5 pt-16 pb-8 px-4 text-center rounded shadow relative ${
-                        isPopular ? "text-white bg-blue-500" : "bg-white"
-                      }`}
-                    >
-                      {isPopular && (
-                        <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-                          <span className="bg-yellow-400 text-yellow-900 text-xs font-semibold px-3 py-1 rounded-full">
-                            Most Popular
+                    return (
+                      <div
+                        key={plan.id}
+                        className="w-full md:w-1/2 lg:w-1/3 px-3 mb-6"
+                      >
+                        <div
+                          className={`hover-up-5 pt-16 pb-8 px-4 text-center rounded shadow relative ${
+                            isPopular ? "text-white bg-blue-500" : "bg-white"
+                          }`}
+                        >
+                          {isPopular && (
+                            <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
+                              <span className="bg-yellow-400 text-yellow-900 text-xs font-semibold px-3 py-1 rounded-full">
+                                Most Popular
+                              </span>
+                            </div>
+                          )}
+                          <img
+                            className="h-20 mb-6 mx-auto"
+                            src={
+                              idx === 0
+                                ? "/vendor/monst/img/icons/startup.svg"
+                                : idx === 1
+                                ? "/vendor/monst/img/icons/agency.svg"
+                                : "/vendor/monst/img/icons/enterprise.svg"
+                            }
+                            alt={plan.name}
+                          />
+                          <h3
+                            className={`mb-2 text-4xl font-bold font-heading ${
+                              isPopular ? "text-white" : ""
+                            }`}
+                          >
+                            {plan.name}
+                          </h3>
+                          <span
+                            className={`text-4xl font-bold font-heading ${
+                              isPopular ? "text-white" : "text-blue-500"
+                            }`}
+                          >
+                            {currency}
+                            {price?.toFixed(2)}
                           </span>
+                          <p
+                            className={`mt-2 mb-8 ${
+                              isPopular ? "text-white" : "text-blueGray-400"
+                            }`}
+                          >
+                            {plan.credits} credits{" "}
+                            {plan.hours && `(${plan.hours} hrs)`}
+                          </p>
+                          <div className="flex flex-col items-center mb-8">
+                            <ul
+                              className={
+                                isPopular ? "text-white" : "text-blueGray-400"
+                              }
+                            >
+                              <li className="flex items-center mb-3">
+                                <svg
+                                  className="w-6 h-6 mr-2 text-green-500"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  ></path>
+                                </svg>
+                                <span>
+                                  {plan.description ||
+                                    `${plan.credits} credits for tutoring`}
+                                </span>
+                              </li>
+                              <li className="flex items-center mb-3">
+                                <svg
+                                  className="w-6 h-6 mr-2 text-green-500"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  ></path>
+                                </svg>
+                                <span>
+                                  {plan.price_per_credit
+                                    ? `${currency}${plan.price_per_credit.toFixed(
+                                        2
+                                      )}/credit`
+                                    : "Flexible pricing"}
+                                </span>
+                              </li>
+                              <li className="flex items-center">
+                                <svg
+                                  className="w-6 h-6 mr-2 text-green-500"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  ></path>
+                                </svg>
+                                <span>1:1 tutoring — 30 or 60 minutes</span>
+                              </li>
+                            </ul>
+                          </div>
+                          <div>
+                            <a
+                              className={`block sm:inline-block py-4 px-6 mb-4 sm:mb-0 sm:mr-3 text-xs font-semibold leading-none rounded ${
+                                isPopular
+                                  ? "text-blue-500 bg-white hover:bg-blueGray-50"
+                                  : "text-white bg-blue-400 hover:bg-blue-500"
+                              }`}
+                              href="#"
+                            >
+                              Start Free Trial
+                            </a>
+                            <a
+                              className={`block sm:inline-block py-4 px-6 text-xs font-semibold leading-none rounded ${
+                                isPopular
+                                  ? "border border-blue-400 hover:border-blue-400"
+                                  : "text-blueGray-500 hover:text-blueGray-600 bg-white border border-blueGray-200 hover:border-blueGray-300"
+                              }`}
+                              href="#"
+                            >
+                              Purchase
+                            </a>
+                          </div>
                         </div>
-                      )}
-                      <img
-                        className="h-20 mb-6 mx-auto"
-                        src={
-                          idx === 0
-                            ? "/vendor/monst/img/icons/startup.svg"
-                            : idx === 1
-                            ? "/vendor/monst/img/icons/agency.svg"
-                            : "/vendor/monst/img/icons/enterprise.svg"
-                        }
-                        alt={plan.name}
-                      />
-                      <h3
-                        className={`mb-2 text-4xl font-bold font-heading ${
-                          isPopular ? "text-white" : ""
-                        }`}
-                      >
-                        {plan.name}
-                      </h3>
-                      <span
-                        className={`text-4xl font-bold font-heading ${
-                          isPopular ? "text-white" : "text-blue-500"
-                        }`}
-                      >
-                        {currency}
-                        {price?.toFixed(2)}
-                      </span>
-                      <p
-                        className={`mt-2 mb-8 ${
-                          isPopular ? "text-white" : "text-blueGray-400"
-                        }`}
-                      >
-                        {plan.credits} credits{" "}
-                        {plan.hours && `(${plan.hours} hrs)`}
-                      </p>
-                      <div className="flex flex-col items-center mb-8">
-                        <ul
-                          className={
-                            isPopular ? "text-white" : "text-blueGray-400"
-                          }
-                        >
-                          <li className="flex items-center mb-3">
-                            <svg
-                              className="w-6 h-6 mr-2 text-green-500"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                              ></path>
-                            </svg>
-                            <span>
-                              {plan.description ||
-                                `${plan.credits} credits for tutoring`}
-                            </span>
-                          </li>
-                          <li className="flex items-center mb-3">
-                            <svg
-                              className="w-6 h-6 mr-2 text-green-500"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                              ></path>
-                            </svg>
-                            <span>
-                              {plan.price_per_credit
-                                ? `${currency}${plan.price_per_credit.toFixed(
-                                    2
-                                  )}/credit`
-                                : "Flexible pricing"}
-                            </span>
-                          </li>
-                          <li className="flex items-center">
-                            <svg
-                              className="w-6 h-6 mr-2 text-green-500"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                              ></path>
-                            </svg>
-                            <span>1:1 tutoring — 30 or 60 minutes</span>
-                          </li>
-                        </ul>
                       </div>
-                      <div>
-                        <a
-                          className={`block sm:inline-block py-4 px-6 mb-4 sm:mb-0 sm:mr-3 text-xs font-semibold leading-none rounded ${
-                            isPopular
-                              ? "text-blue-500 bg-white hover:bg-blueGray-50"
-                              : "text-white bg-blue-400 hover:bg-blue-500"
-                          }`}
-                          href="#"
-                        >
-                          Start Free Trial
-                        </a>
-                        <a
-                          className={`block sm:inline-block py-4 px-6 text-xs font-semibold leading-none rounded ${
-                            isPopular
-                              ? "border border-blue-400 hover:border-blue-400"
-                              : "text-blueGray-500 hover:text-blueGray-600 bg-white border border-blueGray-200 hover:border-blueGray-300"
-                          }`}
-                          href="#"
-                        >
-                          Purchase
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                    );
+                  })}
+              </div>
+              <div className="text-center mt-8">
+                <a
+                  href="/pricing"
+                  className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-[#2563EB] text-white font-medium hover:bg-[#1d4ed8] transition"
+                >
+                  See More
+                </a>
+              </div>
+            </>
           ) : (
             <div className="text-center py-12">
               <p className="text-gray-500">
