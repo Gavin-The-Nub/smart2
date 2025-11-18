@@ -93,6 +93,7 @@ const Index = () => {
   const [inViewport, setInViewport] = useState(false);
   const [creditPlans, setCreditPlans] = useState<CreditPlan[]>([]);
   const [loadingPlans, setLoadingPlans] = useState(true);
+  const [activeTab, setActiveTab] = useState<"us" | "ph">("us");
   const { location } = useGeolocation();
 
   const handleScroll = () => {
@@ -114,15 +115,17 @@ const Index = () => {
     };
   }, []);
 
-  // Fetch credit plans based on user location
+  // When geolocation is available, use it to set the default tab (US/PH)
+  useEffect(() => {
+    if (!location) return;
+    setActiveTab(location.country === "PH" ? "ph" : "us");
+  }, [location]);
+
+  // Fetch credit plans based on selected tab (region)
   useEffect(() => {
     const fetchCreditPlans = async () => {
       try {
-        if (!location) return;
-
-        // Determine region: PH for Philippines, US for everything else
-        const region = location.country === "PH" ? "PH" : "US";
-
+        const region = activeTab === "ph" ? "PH" : "US";
         const { data, error } = await supabase
           .from("credit_plans")
           .select("*")
@@ -140,7 +143,7 @@ const Index = () => {
     };
 
     fetchCreditPlans();
-  }, [location]);
+  }, [activeTab]);
 
   return (
     <>
@@ -464,12 +467,36 @@ const Index = () => {
               Buy credits to book tutoring sessions that fit your child's needs.
               Every enrollment helps fund sponsorships for learners in need.
             </p>
-            {location && (
-              <p className="text-sm text-blueGray-500 mt-2">
-                Showing prices for:{" "}
-                {location.country === "PH" ? "Philippines" : "United States"}
-              </p>
-            )}
+            <Reveal>
+              <div className="flex justify-center mb-4 mt-6">
+                <div className="inline-flex bg-slate-100 rounded-lg p-1">
+                  <button
+                    onClick={() => setActiveTab("us")}
+                    className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
+                      activeTab === "us"
+                        ? "bg-white text-slate-900 shadow-sm"
+                        : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    US
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("ph")}
+                    className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
+                      activeTab === "ph"
+                        ? "bg-white text-slate-900 shadow-sm"
+                        : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    Philippines
+                  </button>
+                </div>
+              </div>
+            </Reveal>
+            <p className="text-sm text-blueGray-500 mt-2">
+              Showing prices for:{" "}
+              {activeTab === "ph" ? "Philippines" : "United States"}
+            </p>
           </div>
 
           {loadingPlans ? (
@@ -496,10 +523,8 @@ const Index = () => {
                     );
                     const isPopular = idx === 1 || filteredPlans.length === 1;
                     const price =
-                      location?.country === "PH"
-                        ? plan.price_php
-                        : plan.price_usd;
-                    const currency = location?.country === "PH" ? "₱" : "$";
+                      activeTab === "ph" ? plan.price_php : plan.price_usd;
+                    const currency = activeTab === "ph" ? "₱" : "$";
 
                     return (
                       <div

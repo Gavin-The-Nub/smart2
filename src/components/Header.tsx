@@ -7,7 +7,6 @@ import { MobileMenu } from "./MobileMenu";
 import { Button } from "./ui/button";
 
 const NAV_ITEMS = [
-  { label: "Find Tutors", href: "/find-tutors" },
   {
     label: "Learn",
     href: "#",
@@ -270,8 +269,7 @@ export function Header() {
                         sub.href === "/services" ||
                         sub.href === "/faq" ||
                         sub.href === "/blog" ||
-                        sub.href === "/contact" ||
-                        sub.href === "/find-tutors" ? (
+                        sub.href === "/contact" ? (
                           <Link
                             to={sub.href}
                             className="block px-4 py-2 text-base text-slate-700 hover:bg-slate-50 hover:text-[#2563EB] rounded-lg transition-colors"

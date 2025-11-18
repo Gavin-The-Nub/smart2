@@ -65,23 +65,26 @@ export default function Pricing() {
           .order("sort_order", { ascending: true });
 
         if (error) throw error;
-        
+
         // Transform the data to match our UI expectations
-        const transformedData = (data || []).map(plan => ({
+        const transformedData = (data || []).map((plan) => ({
           ...plan,
           // Convert string prices to numbers
           price_usd: plan.price_usd ? parseFloat(plan.price_usd) : null,
           price_php: plan.price_php ? parseFloat(plan.price_php) : null,
           hours: plan.hours ? parseFloat(plan.hours) : null,
-          price_per_credit: plan.price_per_credit ? parseFloat(plan.price_per_credit) : null
+          price_per_credit: plan.price_per_credit
+            ? parseFloat(plan.price_per_credit)
+            : null,
         }));
-        
+
         setCreditPlans(transformedData);
       } catch (err) {
         console.error("Error fetching credit plans:", err);
         toast({
           title: "Error",
-          description: "Failed to load pricing information. Please try again later.",
+          description:
+            "Failed to load pricing information. Please try again later.",
           variant: "destructive",
         });
       } finally {
@@ -99,36 +102,40 @@ export default function Pricing() {
   // Format price with currency symbol
   const formatPrice = (amount: number, currency: string) => {
     return new Intl.NumberFormat(undefined, {
-      style: 'currency',
+      style: "currency",
       currency: currency,
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
   };
 
   const getPrice = (plan: CreditPlan) => {
     const price = activeTab === "us" ? plan.price_usd : plan.price_php;
-    return typeof price === 'number' ? price : 0;
+    return typeof price === "number" ? price : 0;
   };
 
   // Convert credit plans to the format expected by the UI
-  const currentPlans = creditPlans.map(plan => ({
+  const currentPlans = creditPlans.map((plan) => ({
     ...plan,
     price: formatPrice(
-      activeTab === "us" ? (plan.price_usd || 0) : (plan.price_php || 0),
+      activeTab === "us" ? plan.price_usd || 0 : plan.price_php || 0,
       activeTab === "us" ? "USD" : "PHP"
     ),
     credits: `${plan.credits} credits`,
     duration: plan.hours ? `≈ ${plan.hours} hrs` : "",
     description: plan.description || "Best for your learning needs",
     features: [
-      `${plan.hours || (plan.credits / 2)} hours of 1:1 tutoring`,
-      plan.credits > 10 ? "Priority booking & progress dashboard" : "Standard booking",
-      plan.credits > 20 ? "Shareable with family members" : "Single student use"
+      `${plan.hours || plan.credits / 2} hours of 1:1 tutoring`,
+      plan.credits > 10
+        ? "Priority booking & progress dashboard"
+        : "Standard booking",
+      plan.credits > 20
+        ? "Shareable with family members"
+        : "Single student use",
     ],
     isPopular: plan.sort_order === 2 || plan.name.includes("Standard"),
     primaryCta: "Get Started",
-    secondaryCta: "How credits work"
+    secondaryCta: "How credits work",
   }));
 
   const handleDemoPurchase = async (planId: string) => {
@@ -143,32 +150,34 @@ export default function Pricing() {
       if (plan) {
         const price = getPrice(plan);
         const currency = getCurrencySymbol(plan.region);
-        
-        setPurchaseMsg(
-          `Demo purchase successful! You would have received ${plan.credits} credits for ${formatPrice(price, currency)}.`
-        );
-        
-        toast({
-        title: "Demo Purchase",
-        description: `You've successfully purchased ${plan.credits} credits!`,
-      });
-    }
-  } catch (error) {
-    console.error("Purchase error:", error);
-    setPurchaseMsg("Error processing purchase. Please try again.");
-    toast({
-      title: "Error",
-      description: "Failed to process purchase. Please try again.",
-      variant: "destructive",
-    });
-  } finally {
-    setPurchasingId(null);
-  }
-};
 
-return (
-  <div className="min-h-screen bg-white">
-    <Header />
+        setPurchaseMsg(
+          `Demo purchase successful! You would have received ${
+            plan.credits
+          } credits for ${formatPrice(price, currency)}.`
+        );
+
+        toast({
+          title: "Demo Purchase",
+          description: `You've successfully purchased ${plan.credits} credits!`,
+        });
+      }
+    } catch (error) {
+      console.error("Purchase error:", error);
+      setPurchaseMsg("Error processing purchase. Please try again.");
+      toast({
+        title: "Error",
+        description: "Failed to process purchase. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setPurchasingId(null);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden pb-20 md:pb-28 -mt-24 pt-24 bg-[#F7FAFD]">
@@ -217,15 +226,45 @@ return (
       <section className="py-10">
         <div className="max-w-[1200px] mx-auto px-6">
           <Reveal>
-            <div className="text-center mb-12">
+            <div className="text-center mb-6">
               <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
-                Pricing for {activeTab === 'ph' ? 'Philippines' : 'International'}
+                Pricing for{" "}
+                {activeTab === "ph" ? "Philippines" : "International"}
               </h2>
               {!location && (
                 <p className="text-slate-500">
-                  Allow location access to see pricing in your local currency
+                  Allow location access to auto-detect your region, or choose a
+                  tab below.
                 </p>
               )}
+            </div>
+          </Reveal>
+
+          {/* Region Tabs (US / PH) */}
+          <Reveal>
+            <div className="flex justify-center mb-10">
+              <div className="inline-flex bg-slate-100 rounded-lg p-1">
+                <button
+                  onClick={() => setActiveTab("us")}
+                  className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
+                    activeTab === "us"
+                      ? "bg-white text-slate-900 shadow-sm"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  US
+                </button>
+                <button
+                  onClick={() => setActiveTab("ph")}
+                  className={`px-6 py-3 rounded-md text-sm font-medium transition-all ${
+                    activeTab === "ph"
+                      ? "bg-white text-slate-900 shadow-sm"
+                      : "text-slate-600 hover:text-slate-900"
+                  }`}
+                >
+                  Philippines
+                </button>
+              </div>
             </div>
           </Reveal>
 
@@ -234,24 +273,26 @@ return (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {loading ? (
                 // Loading state
-                Array(4).fill(0).map((_, index) => (
-                  <div 
-                    key={index}
-                    className="bg-white rounded-3xl p-8 ring-1 ring-slate-200 animate-pulse h-[600px]"
-                  >
-                    <div className="h-8 bg-slate-200 rounded w-3/4 mb-4"></div>
-                    <div className="h-12 bg-slate-200 rounded w-1/2 mb-4"></div>
-                    <div className="h-6 bg-slate-200 rounded w-1/3 mb-8"></div>
-                    <div className="space-y-4">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="flex items-center space-x-3">
-                          <div className="h-5 w-5 bg-slate-200 rounded-full"></div>
-                          <div className="h-4 bg-slate-200 rounded w-3/4"></div>
-                        </div>
-                      ))}
+                Array(4)
+                  .fill(0)
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      className="bg-white rounded-3xl p-8 ring-1 ring-slate-200 animate-pulse h-[600px]"
+                    >
+                      <div className="h-8 bg-slate-200 rounded w-3/4 mb-4"></div>
+                      <div className="h-12 bg-slate-200 rounded w-1/2 mb-4"></div>
+                      <div className="h-6 bg-slate-200 rounded w-1/3 mb-8"></div>
+                      <div className="space-y-4">
+                        {[1, 2, 3].map((i) => (
+                          <div key={i} className="flex items-center space-x-3">
+                            <div className="h-5 w-5 bg-slate-200 rounded-full"></div>
+                            <div className="h-4 bg-slate-200 rounded w-3/4"></div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))
+                  ))
               ) : currentPlans.length > 0 ? (
                 // Show plans when loaded
                 currentPlans.map((plan) => (
@@ -337,7 +378,9 @@ return (
                               : "bg-[#2563EB] text-white hover:bg-[#1d4ed8]"
                           } disabled:opacity-50`}
                         >
-                          {purchasingId === plan.id ? "Processing..." : plan.primaryCta}
+                          {purchasingId === plan.id
+                            ? "Processing..."
+                            : plan.primaryCta}
                         </button>
                         <a
                           href="/faq#credits"
@@ -361,7 +404,10 @@ return (
               ) : (
                 // No plans available
                 <div className="col-span-4 text-center py-12">
-                  <p className="text-slate-500">No pricing plans available at the moment. Please check back later.</p>
+                  <p className="text-slate-500">
+                    No pricing plans available at the moment. Please check back
+                    later.
+                  </p>
                 </div>
               )}
             </div>
@@ -396,20 +442,23 @@ return (
                       </th>
                       {!loading && currentPlans.length > 0 ? (
                         currentPlans.map((plan) => (
-                          <th 
+                          <th
                             key={plan.id}
                             className={`text-center py-4 px-6 font-semibold ${
-                              plan.isPopular 
-                                ? 'bg-[#2563EB] text-white' 
-                                : 'text-slate-900'
+                              plan.isPopular
+                                ? "bg-[#2563EB] text-white"
+                                : "text-slate-900"
                             }`}
                           >
                             {plan.name}
                           </th>
                         ))
                       ) : (
-                        <th colSpan={4} className="py-4 px-6 text-center text-slate-500">
-                          {loading ? 'Loading...' : 'No plans available'}
+                        <th
+                          colSpan={4}
+                          className="py-4 px-6 text-center text-slate-500"
+                        >
+                          {loading ? "Loading..." : "No plans available"}
                         </th>
                       )}
                     </tr>
@@ -421,7 +470,7 @@ return (
                       </td>
                       {!loading && currentPlans.length > 0 ? (
                         currentPlans.map((plan) => (
-                          <td 
+                          <td
                             key={plan.id}
                             className="py-4 px-6 text-center text-slate-500 text-sm"
                           >
@@ -429,8 +478,11 @@ return (
                           </td>
                         ))
                       ) : (
-                        <td colSpan={4} className="py-4 px-6 text-center text-slate-400 text-sm">
-                          {loading ? 'Loading...' : 'N/A'}
+                        <td
+                          colSpan={4}
+                          className="py-4 px-6 text-center text-slate-400 text-sm"
+                        >
+                          {loading ? "Loading..." : "N/A"}
                         </td>
                       )}
                     </tr>
@@ -440,7 +492,7 @@ return (
                       </td>
                       {!loading && currentPlans.length > 0 ? (
                         currentPlans.map((plan) => (
-                          <td 
+                          <td
                             key={plan.id}
                             className="py-4 px-6 text-center text-slate-500 text-sm"
                           >
@@ -448,8 +500,11 @@ return (
                           </td>
                         ))
                       ) : (
-                        <td colSpan={4} className="py-4 px-6 text-center text-slate-400 text-sm">
-                          {loading ? 'Loading...' : 'N/A'}
+                        <td
+                          colSpan={4}
+                          className="py-4 px-6 text-center text-slate-400 text-sm"
+                        >
+                          {loading ? "Loading..." : "N/A"}
                         </td>
                       )}
                     </tr>
@@ -459,16 +514,19 @@ return (
                       </td>
                       {!loading && currentPlans.length > 0 ? (
                         currentPlans.map((plan) => (
-                          <td 
+                          <td
                             key={plan.id}
                             className="py-4 px-6 text-center text-slate-500 text-sm"
                           >
-                            {plan.duration || 'N/A'}
+                            {plan.duration || "N/A"}
                           </td>
                         ))
                       ) : (
-                        <td colSpan={4} className="py-4 px-6 text-center text-slate-400 text-sm">
-                          {loading ? 'Loading...' : 'N/A'}
+                        <td
+                          colSpan={4}
+                          className="py-4 px-6 text-center text-slate-400 text-sm"
+                        >
+                          {loading ? "Loading..." : "N/A"}
                         </td>
                       )}
                     </tr>
@@ -485,8 +543,9 @@ return (
         <div className="max-w-[1200px] mx-auto px-6">
           <Reveal>
             <p className="text-sm text-slate-500 text-center">
-              Credits are valid for 6 months from the date of purchase. Unused credits will expire after this period.
-              Contact us for custom enterprise plans or bulk discounts.
+              Credits are valid for 6 months from the date of purchase. Unused
+              credits will expire after this period. Contact us for custom
+              enterprise plans or bulk discounts.
             </p>
           </Reveal>
         </div>
