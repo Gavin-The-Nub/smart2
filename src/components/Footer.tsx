@@ -69,25 +69,16 @@ export default function Footer() {
                 J and J Arcade Bldg., Lawaan 1, Talisay, Cebu 6045, PH<br />
                 <span className="text-slate-700">0908 527 1364</span>
               </li>
-              <li className="text-slate-500">Email: <em>coming soon</em></li>
+              <li>
+                <span className="block font-medium text-slate-700">Email</span>
+                <a
+                  href="mailto:sbtlcmanager@gmail.com"
+                  className="text-blue-600 hover:text-blue-700"
+                >
+                  sbtlcmanager@gmail.com
+                </a>
+              </li>
             </ul>
-          </div>
-
-          {/* Follow us */}
-          <div aria-label="Follow us">
-            <h3 className="text-sm font-semibold text-slate-900">Follow</h3>
-            <div className="mt-4 flex items-center gap-3">
-              <a href="https://www.instagram.com/smartbrainlearning/" target="_blank" rel="noopener" aria-label="Instagram" className="p-2 rounded-full bg-white shadow ring-1 ring-slate-200 hover:shadow-md">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2a3 3 0 013 3v10a3 3 0 01-3 3H7a3 3 0 01-3-3V7a3 3 0 013-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm6.5-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z"/></svg>
-              </a>
-              <a href="https://www.facebook.com/sbtlcinc" target="_blank" rel="noopener" aria-label="Facebook" className="p-2 rounded-full bg-white shadow ring-1 ring-slate-200 hover:shadow-md">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7v-3h3.4V9.5c0-3.3 2-5.2 5-5.2 1.5 0 3 .27 3 .27v3.3h-1.7c-1.7 0-2.3 1.1-2.3 2.2V12H18l-.5 3h-2.8v7A10 10 0 0022 12z"/></svg>
-              </a>
-              {/* Optional placeholders:
-              <a href="#" aria-label="LinkedIn" className="p-2 rounded-full bg-white shadow ring-1 ring-slate-200 hover:shadow-md">…</a>
-              <a href="#" aria-label="YouTube" className="p-2 rounded-full bg-white shadow ring-1 ring-slate-200 hover:shadow-md">…</a>
-              */}
-            </div>
           </div>
         </div>
 

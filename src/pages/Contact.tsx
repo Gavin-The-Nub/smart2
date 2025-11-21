@@ -8,7 +8,7 @@ import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Label } from '../components/ui/label';
-import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Youtube, CheckCircle, AlertCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -264,44 +264,14 @@ export default function Contact() {
                       </div>
                       <div>
                         <p className="font-medium text-slate-900">Email</p>
-                        <p className="text-slate-600">contact@smartbrain.com</p>
+                        <a
+                          href="mailto:sbtlcmanager@gmail.com"
+                          className="text-blue-600 hover:text-blue-700 font-medium"
+                        >
+                          sbtlcmanager@gmail.com
+                        </a>
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                {/* Social Links */}
-                <div className="bg-white rounded-2xl border border-slate-200 p-8">
-                  <h3 className="text-xl font-semibold text-slate-900 mb-6">Follow Us</h3>
-                  <div className="flex gap-4">
-                    <a 
-                      href="#" 
-                      className="w-12 h-12 bg-blue-50 hover:bg-blue-100 rounded-lg flex items-center justify-center transition-colors"
-                      aria-label="Facebook"
-                    >
-                      <Facebook className="w-5 h-5 text-blue-600" />
-                    </a>
-                    <a 
-                      href="#" 
-                      className="w-12 h-12 bg-pink-50 hover:bg-pink-100 rounded-lg flex items-center justify-center transition-colors"
-                      aria-label="Instagram"
-                    >
-                      <Instagram className="w-5 h-5 text-pink-600" />
-                    </a>
-                    <a 
-                      href="#" 
-                      className="w-12 h-12 bg-blue-50 hover:bg-blue-100 rounded-lg flex items-center justify-center transition-colors"
-                      aria-label="LinkedIn"
-                    >
-                      <Linkedin className="w-5 h-5 text-blue-600" />
-                    </a>
-                    <a 
-                      href="#" 
-                      className="w-12 h-12 bg-red-50 hover:bg-red-100 rounded-lg flex items-center justify-center transition-colors"
-                      aria-label="YouTube"
-                    >
-                      <Youtube className="w-5 h-5 text-red-600" />
-                    </a>
                   </div>
                 </div>
               </div>
