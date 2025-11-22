@@ -1,26 +1,34 @@
-import React, { useState } from 'react';
-import emailjs from '@emailjs/browser';
-import { Header } from '../components/Header';
-import Footer from '../components/Footer';
-import { Reveal } from '../components/animations/Reveal';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Textarea } from '../components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { Label } from '../components/ui/label';
-import { MapPin, Phone, Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import React, { useState } from "react";
+import emailjs from "@emailjs/browser";
+import { Header } from "../components/Header";
+import Footer from "../components/Footer";
+import { Reveal } from "../components/animations/Reveal";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
+import { Label } from "../components/ui/label";
+import { MapPin, Phone, Mail, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    category: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    category: "",
+    message: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Initialize EmailJS on component mount
   React.useEffect(() => {
@@ -33,15 +41,15 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setSubmitStatus('idle');
-    setErrorMessage('');
+    setSubmitStatus("idle");
+    setErrorMessage("");
 
     try {
       const templateParams = {
         to_email: import.meta.env.VITE_EMAILJS_TO_EMAIL,
         from_name: formData.name,
         from_email: formData.email,
-        phone: formData.phone || 'Not provided',
+        phone: formData.phone || "Not provided",
         category: formData.category,
         message: formData.message,
       };
@@ -53,31 +61,41 @@ export default function Contact() {
       );
 
       if (response.status === 200) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', phone: '', category: '', message: '' });
-        setTimeout(() => setSubmitStatus('idle'), 5000);
+        setSubmitStatus("success");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          category: "",
+          message: "",
+        });
+        setTimeout(() => setSubmitStatus("idle"), 5000);
       }
     } catch (error) {
-      setSubmitStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : 'Failed to send message. Please try again.');
-      console.error('Email send error:', error);
+      setSubmitStatus("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Failed to send message. Please try again."
+      );
+      console.error("Email send error:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="relative pt-20 pb-16 lg:pt-28 lg:pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50"></div>
-        
+
         <div className="relative max-w-[1200px] mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto">
             <Reveal delay={100}>
@@ -87,7 +105,8 @@ export default function Contact() {
             </Reveal>
             <Reveal delay={200}>
               <p className="text-lg md:text-xl text-slate-600 mb-8">
-                Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+                Have questions? We'd love to hear from you. Send us a message
+                and we'll respond as soon as possible.
               </p>
             </Reveal>
           </div>
@@ -98,7 +117,6 @@ export default function Contact() {
       <section className="py-16 lg:py-20">
         <div className="max-w-[1200px] mx-auto px-4 md:px-6">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-            
             {/* Contact Form */}
             <Reveal delay={100}>
               <div className="bg-white rounded-2xl border border-slate-200 p-8 lg:p-10">
@@ -106,18 +124,21 @@ export default function Contact() {
                   Send us a message
                 </h2>
                 <p className="text-slate-600 mb-8">
-                  Fill out the form below and we'll get back to you within 24 hours.
+                  Fill out the form below and we'll get back to you within 24
+                  hours.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {submitStatus === 'success' && (
+                  {submitStatus === "success" && (
                     <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
                       <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                      <p className="text-green-800 font-medium">Message sent successfully! We'll get back to you soon.</p>
+                      <p className="text-green-800 font-medium">
+                        Message sent successfully! We'll get back to you soon.
+                      </p>
                     </div>
                   )}
 
-                  {submitStatus === 'error' && (
+                  {submitStatus === "error" && (
                     <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
                       <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
                       <p className="text-red-800 font-medium">{errorMessage}</p>
@@ -132,7 +153,9 @@ export default function Contact() {
                         type="text"
                         placeholder="Your name"
                         value={formData.name}
-                        onChange={(e) => handleInputChange('name', e.target.value)}
+                        onChange={(e) =>
+                          handleInputChange("name", e.target.value)
+                        }
                         required
                         disabled={isLoading}
                         className="h-12"
@@ -145,7 +168,9 @@ export default function Contact() {
                         type="email"
                         placeholder="your@email.com"
                         value={formData.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        onChange={(e) =>
+                          handleInputChange("email", e.target.value)
+                        }
                         required
                         disabled={isLoading}
                         className="h-12"
@@ -161,14 +186,22 @@ export default function Contact() {
                         type="tel"
                         placeholder="(555) 123-4567"
                         value={formData.phone}
-                        onChange={(e) => handleInputChange('phone', e.target.value)}
+                        onChange={(e) =>
+                          handleInputChange("phone", e.target.value)
+                        }
                         disabled={isLoading}
                         className="h-12"
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="category">I am a... *</Label>
-                      <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)} disabled={isLoading}>
+                      <Select
+                        value={formData.category}
+                        onValueChange={(value) =>
+                          handleInputChange("category", value)
+                        }
+                        disabled={isLoading}
+                      >
                         <SelectTrigger className="h-12">
                           <SelectValue placeholder="Select category" />
                         </SelectTrigger>
@@ -189,19 +222,21 @@ export default function Contact() {
                       id="message"
                       placeholder="Tell us how we can help you..."
                       value={formData.message}
-                      onChange={(e) => handleInputChange('message', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("message", e.target.value)
+                      }
                       required
                       disabled={isLoading}
                       className="min-h-[120px]"
                     />
                   </div>
 
-                  <Button 
+                  <Button
                     type="submit"
                     disabled={isLoading}
                     className="w-full h-12 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed"
                   >
-                    {isLoading ? 'Sending...' : 'Send Message'}
+                    {isLoading ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </div>
@@ -215,14 +250,20 @@ export default function Contact() {
                   <div className="w-24 h-24 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <Mail className="w-10 h-10 text-blue-600" />
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">Our Support Team</h3>
-                  <p className="text-slate-600">Friendly support staff ready to help you succeed</p>
+                  <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                    Our Support Team
+                  </h3>
+                  <p className="text-slate-600">
+                    Friendly support staff ready to help you succeed
+                  </p>
                 </div>
 
                 {/* Contact Details */}
                 <div className="bg-white rounded-2xl border border-slate-200 p-8">
-                  <h3 className="text-xl font-semibold text-slate-900 mb-6">Contact Information</h3>
-                  
+                  <h3 className="text-xl font-semibold text-slate-900 mb-6">
+                    Contact Information
+                  </h3>
+
                   <div className="space-y-6">
                     {/* US Address */}
                     <div className="flex items-start gap-4">
@@ -231,7 +272,11 @@ export default function Contact() {
                       </div>
                       <div>
                         <p className="font-medium text-slate-900">US Office</p>
-                        <p className="text-slate-600">5830 E 2nd St, Ste 7000<br />Casper, Wyoming 82609 US</p>
+                        <p className="text-slate-600">
+                          5830 E 2nd St, Ste 7000
+                          <br />
+                          Casper, Wyoming 82609 US
+                        </p>
                       </div>
                     </div>
 
@@ -241,8 +286,13 @@ export default function Contact() {
                         <MapPin className="w-5 h-5 text-blue-600" />
                       </div>
                       <div>
-                        <p className="font-medium text-slate-900">Philippines Office</p>
-                        <p className="text-slate-600">J and J Arcade Bldg. Lawaan 1<br />Talisay Cebu 6045</p>
+                        <p className="font-medium text-slate-900">
+                          Philippines Office
+                        </p>
+                        <p className="text-slate-600">
+                          J and J Arcade Bldg. Lawaan 1<br />
+                          Talisay Cebu 6045
+                        </p>
                       </div>
                     </div>
 
@@ -253,7 +303,11 @@ export default function Contact() {
                       </div>
                       <div>
                         <p className="font-medium text-slate-900">Phone</p>
-                        <p className="text-slate-600">US: +1 805 317 4524<br />Philippines: 0908 527 1364</p>
+                        <p className="text-slate-600">
+                          US: +1 805 317 4524
+                          <br />
+                          Philippines: 0908 527 1364
+                        </p>
                       </div>
                     </div>
 
