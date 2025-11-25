@@ -157,8 +157,8 @@ const Index = () => {
             <div className="flex-1 lg:pr-8">
               <div className="max-w-xl">
                 <h1 className="text-3xl lg:text-5xl lg:leading-normal mb-6 font-bold font-heading wow animate__animated animate__fadeIn">
-                  Smart Brain Tutoring <br />
-                  and <span className="text-blue-500">Learning Center</span>
+                  Building Bright <br />
+                  <span className="text-blue-500">Minds Globally</span>
                 </h1>
                 <div className="text-blueGray-400 leading-relaxed mb-8 wow animate__animated animate__fadeIn text-lg">
                   <TypingEffect text="Providing personalized tutoring services to help every student achieve academic success." />
@@ -166,16 +166,16 @@ const Index = () => {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
                     className="btn-primary py-4 px-8 wow animate__animated animate__fadeIn hover-up-2 text-center"
-                    href="#highlights"
+                    href="/find-tutors"
                   >
-                    Why Choose Us
+                    Find a tutor
                   </a>
                   <a
                     className="btn-white wow animate__animated animate__fadeIn hover-up-2 text-center"
                     data-wow-delay=".3s"
-                    href="#how-we-work"
+                    href="/sponsors"
                   >
-                    How We Work?
+                    Sponsor a child
                   </a>
                 </div>
               </div>
@@ -208,7 +208,7 @@ const Index = () => {
       </section>
 
       {/* Stats Section - Responsive 4-column grid with card styling */}
-      <section className="mx-auto max-w-[1200px] px-6 py-16 bg-[#F7FAFD]">
+      <section className="mx-auto max-w-[1200px] px-6 py-16 bg-[#F7FAFD] hidden">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* 1. Annual Partners */}
           <div
@@ -995,7 +995,7 @@ const Index = () => {
                   2
                 </div>
                 <LottieBlock
-                  src="/animations/time.json"
+                  src="/animations/Time.json"
                   title="Flexible Hours"
                   className="mx-auto mb-6 overflow-hidden rounded-xl"
                   width={320}
