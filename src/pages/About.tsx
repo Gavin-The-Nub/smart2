@@ -214,28 +214,21 @@ export default function About() {
               <Reveal>
                 <div className="max-w-lg">
                   <span className="inline-block py-1 px-3 text-xs font-semibold bg-blue-100 text-blue-600 rounded-xl mb-4">
-                    About Our Founder
+                    Our Story
                   </span>
                   <h2 className="text-3xl md:text-4xl mb-6 font-bold font-heading">
-                    <span className="text-blue-500">Ilyne Cendy Root</span> –
-                    Founder of Global Bright Futures Foundation Inc.
+                    <span className="text-blue-500">Smart Brain TLC Inc.</span>
                   </h2>
-                  {/* First two paragraphs */}
+                  {/* Only the new first paragraph visible */}
                   <p className="text-blueGray-400 leading-relaxed mb-6">
-                    Ilyne Cendy Root’s journey is a story of resilience,
-                    compassion, and unwavering dedication to transforming the
-                    lives of learners and communities. Orphaned at a young age,
-                    she grew up navigating life independently, moving between
-                    relatives, and learning to stand on her own while managing
-                    school responsibilities. Even in high school, she
-                    demonstrated remarkable resourcefulness and courage, risking
-                    her small allowance to sell items for profit—just to meet
-                    daily needs. These early challenges instilled in her a
-                    belief that determination, creativity, and taking risks can
-                    overcome even the toughest circumstances, and sparked her
-                    lifelong commitment to helping others thrive.
+                    Smart Brain TLC Inc. was built from a story of resilience,
+                    compassion, and the belief that every child—no matter their
+                    background—deserves a chance to succeed. Founded by educator
+                    Ilyne Cendy Root, who overcame early hardship through
+                    courage, creativity, and education, Smart Brain TLC carries
+                    forward her lifelong mission: to make learning personal,
+                    accessible, and transformative.
                   </p>
-
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button className="bg-blue-100 text-blue-700 hover:bg-blue-200 px-6 py-2 rounded-lg font-semibold">
@@ -245,214 +238,56 @@ export default function About() {
                     <DialogContent className="z-[1000] max-w-3xl w-[95vw] h-[85vh] p-0 overflow-hidden flex flex-col">
                       <ScrollArea className="p-8 h-full">
                         <h2 className="text-2xl md:text-3xl font-bold font-heading mb-6 text-blue-600">
-                          Ilyne Cendy Root’s Story
+                          About Smart Brain TLC & Founder
                         </h2>
                         <div className="space-y-5 text-blueGray-700 text-base leading-relaxed">
-                          {/* Full story block, formatted as paragraphs and bullet list for key accomplishments */}
                           <p>
-                            Ilyne Cendy Root’s journey is a story of resilience,
-                            compassion, and unwavering dedication to
-                            transforming the lives of learners and communities.
-                            Orphaned at a young age, she grew up navigating life
-                            independently, moving between relatives, and
-                            learning to stand on her own while managing school
-                            responsibilities. Even in high school, she
-                            demonstrated remarkable resourcefulness and courage,
-                            risking her small allowance to sell items for
-                            profit—just to meet daily needs. These early
-                            challenges instilled in her a belief that
-                            determination, creativity, and taking risks can
-                            overcome even the toughest circumstances, and
-                            sparked her lifelong commitment to helping others
-                            thrive.
+                            Smart Brain TLC Inc. was built from a story of
+                            resilience, compassion, and the belief that every
+                            child—no matter their background—deserves a chance
+                            to succeed. Founded by educator Ilyne Cendy Root,
+                            who overcame early hardship through courage,
+                            creativity, and education, Smart Brain TLC carries
+                            forward her lifelong mission: to make learning
+                            personal, accessible, and transformative.
                           </p>
                           <p>
-                            Her personal struggles deepened her empathy for
-                            students who lacked guidance, support, or
-                            opportunity. Committed to education, she earned a
-                            university scholarship and supported herself as a
-                            student assistant in the university library. She
-                            also tutored children—including learners with autism
-                            and ADHD—often traveling long distances, teaching
-                            late into the night, and waking early for her own
-                            studies and student assistant work. Each act of
-                            perseverance reinforced her understanding: education
-                            has the power to change lives, but only when
-                            personalized support and care are available.
+                            From teaching learners with autism and ADHD, to
+                            tutoring students across Asia, to serving schools in
+                            the United States, Ilyne discovered one truth:
+                            students thrive when someone believes in them.
+                            Guided by this conviction, Smart Brain TLC provides
+                            high-quality, affordable 1-on-1 tutoring for both
+                            private students and underserved learners who need
+                            extra care and individualized support.
                           </p>
                           <p>
-                            After graduation, she worked in a Remedial Reading
-                            Center, then took her passion abroad to Thailand,
-                            teaching full-time during weekdays. On weekends, she
-                            continued to serve students by tutoring Thai
-                            learners, leading Brain Fitness programs for
-                            children on Saturdays, and offering Sunday tutoring
-                            for those needing extra guidance. Through these
-                            experiences, she honed her expertise in early
-                            childhood education, brain development, and
-                            multilingual instruction, witnessing firsthand how
-                            guidance, encouragement, and opportunity can unlock
-                            a child’s potential.
+                            What began as a small tutoring effort has grown into
+                            an international education initiative powered by
+                            passion, purpose, and community. Through programs
+                            like Enroll One, Empower Two, Smart Brain TLC
+                            connects students from around the world, ensuring
+                            that enrolling one child helps uplift another with
+                            limited resources.
                           </p>
                           <p>
-                            Returning to the Philippines, she launched Easy to
-                            Learn English, an online business teaching students
-                            from Korea, Thailand, Japan, and Russia, helping
-                            them gain confidence in reading, writing, and
-                            speaking English. She then founded her tutorial and
-                            learning center, providing individualized
-                            instruction and community-based programs.
-                            Recognizing the importance of mentorship and
-                            literacy, she later created a buddy reading program,
-                            pairing young volunteers with struggling readers.
-                            She also partnered and guided scholar students from
-                            the Department of Science and Technology in
-                            developing teaching skills. Alongside her husband,
-                            she dedicated time to caring for homeless children,
-                            feeding and mentoring them, driven by the belief
-                            that every child deserves dignity, nourishment, and
-                            hope.
+                            Today, Smart Brain TLC partners with schools,
+                            families, and organizations to deliver tutoring,
+                            literacy support, early childhood programs, and
+                            mentorship—always grounded in empathy, excellence,
+                            and heart.
                           </p>
                           <p>
-                            Her commitment to the broader community grew even
-                            further. Ilyne began sponsoring churches, organizing
-                            student achievement celebrations, providing school
-                            supplies, delivering disaster relief to affected
-                            communities and sponsoring college students with
-                            laptops and paid teaching opportunities, helping
-                            them to earn and complete their degrees while
-                            gaining valuable classroom experience.
+                            <strong>Our work reflects a simple promise:</strong>
                           </p>
-                          <p>
-                            These initiatives reflect her conviction that
-                            education and care are inseparable, and that
-                            nurturing communities strengthens the foundation for
-                            lifelong learning.
-                          </p>
-                          <p>
-                            From these experiences, she developed the Enroll
-                            One, Empower Two program, a signature initiative
-                            where enrolling a single student helps sponsor and
-                            empower underserved learners, creating a ripple
-                            effect of education, mentorship, and opportunity.
-                            This program later became the foundation for the
-                            Global Bright Futures Foundation, an NGO dedicated
-                            to expanding educational access worldwide.
-                          </p>
-                          <p>
-                            Her international teaching journey exposed the
-                            challenges faced by underserved and English
-                            learners. Upon moving to the United States, she
-                            recognized similar gaps—expensive tutoring, students
-                            left behind in large group settings, inconsistent
-                            tutoring, and limited support. Motivated by these
-                            observations, she expanded Smart Brain TLC to the
-                            U.S., providing affordable, high-quality 1-on-1
-                            tutoring while building a pipeline of passionate
-                            educators from the Philippines.
-                          </p>
-                          <p>
-                            She actively partners with schools, centers, and
-                            businesses in the U.S., the Philippines, and other
-                            countries, ensuring her programs align with
-                            institutions that share her vision for equitable
-                            education. In the U.S., she has served as an
-                            elementary teacher and School Lead in Math and
-                            Science, guiding curriculum development and
-                            instructional strategies, and mentor intern
-                            teachers. She continues to advance her expertise
-                            through extensive Professional Development, CA
-                            holding full teacher certification, and is pursuing
-                            a Master’s Degree in School Management.
-                          </p>
-                          <p>
-                            Through every stage of her journey, Ilyne’s work has
-                            been guided by a central question: How can I create
-                            opportunities for learners and educators to thrive,
-                            no matter their circumstances? The answer has shaped
-                            every program she has built, every partnership she
-                            has forged, and every life she has touched.
-                          </p>
-                          <h3 className="mt-6 mb-2 text-lg font-semibold text-blue-700">
-                            Key Accomplishments
-                          </h3>
                           <ul className="list-disc ml-5 space-y-1">
-                            <li>
-                              Founded Smart Brain TLC Inc. in the Philippines
-                              and expanded it to the United States.
-                            </li>
-                            <li>
-                              Established the Global Bright Futures Foundation
-                              to support learners and educators worldwide.
-                            </li>
-                            <li>
-                              Launched Easy to Learn English, providing online
-                              ESL instruction to students from Korea, Thailand,
-                              Japan, and Russia.
-                            </li>
-                            <li>
-                              Developed community-based programs for students
-                              with learning gaps.
-                            </li>
-                            <li>
-                              Created a youth-powered buddy reading program to
-                              enhance literacy and mentorship.
-                            </li>
-                            <li>
-                              Developed and implemented the Enroll One, Empower
-                              Two program, multiplying impact for underserved
-                              learners.
-                            </li>
-                            <li>
-                              Sponsored, trained, and equipped college students
-                              with laptops, development, and teaching
-                              opportunities.
-                            </li>
-                            <li>
-                              Partnered with schools in the U.S. and Philippines
-                              to align programs with her mission and vision.
-                            </li>
-                            <li>
-                              Sponsored churches, organized student achievement
-                              celebrations, provided school supplies, and
-                              delivered disaster relief to affected communities.
-                            </li>
-                            <li>
-                              Served as School Lead in U.S. schools,
-                              contributing to curriculum and professional
-                              development.
-                            </li>
-                            <li>
-                              Pursuing a Master’s Degree in School Management
-                              while continuing global education initiatives.
-                            </li>
-                            <li>
-                              Provides ongoing support for students, schools,
-                              and communities through sponsorships and relief
-                              programs.
-                            </li>
+                            <li>Every learner can shine.</li>
+                            <li>Every learner deserves a chance.</li>
+                            <li>Every learner matters.</li>
                           </ul>
-                          <h3 className="mt-6 mb-2 text-lg font-semibold text-blue-700">
-                            A Mission Rooted in Heart and Experience
-                          </h3>
-                          <p>
-                            Ilyne’s journey—from orphaned child to resourceful
-                            high school entrepreneur, to international teacher,
-                            and now founder of Smart Brain TLC and the Global
-                            Bright Futures Foundation—is fueled not by
-                            accolades, but by a deep-seated belief:
-                          </p>
-                          <p>
-                            That every learner deserves individualized support,
-                            every aspiring educator deserves mentorship, and
-                            every community thrives when knowledge, care, and
-                            opportunity are shared.
-                          </p>
                           <p className="font-semibold text-blue-800">
-                            Her life’s work is a testament to the idea that one
-                            person’s dedication can inspire change for countless
-                            others, creating a ripple of learning, empowerment,
-                            and hope across the world.
+                            Smart Brain TLC exists to make that promise a
+                            reality.
                           </p>
                         </div>
                       </ScrollArea>
