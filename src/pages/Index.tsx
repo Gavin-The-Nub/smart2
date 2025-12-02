@@ -995,7 +995,7 @@ const Index = () => {
                   2
                 </div>
                 <LottieBlock
-                  src="/animations/Time.json"
+                  src="/animations/time.json"
                   title="Flexible Hours"
                   className="mx-auto mb-6 overflow-hidden rounded-xl"
                   width={320}
