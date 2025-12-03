@@ -629,7 +629,7 @@ const Index = () => {
                                   {plan.price_per_credit
                                     ? `${currency}${plan.price_per_credit.toFixed(
                                         2
-                                      )}/credit`
+                                      )}/hour`
                                     : "Flexible pricing"}
                                 </span>
                               </li>
