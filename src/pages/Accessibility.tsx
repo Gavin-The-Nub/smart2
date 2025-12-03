@@ -1,7 +1,13 @@
 import React from 'react';
 import { Reveal } from '@/components/animations/Reveal';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 export default function Accessibility() {
+  useMetaTags({
+    title: "Accessibility Statement - Smart Brain TLC",
+    description: "Read the Accessibility Statement for Smart Brain TLC. Effective March 1, 2024. This page provides general information and does not constitute legal advice.",
+    url: "https://smartbrainlearning.org/legal/accessibility",
+  });
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}

@@ -12,6 +12,7 @@ import { Header } from "../components/Header";
 import Footer from "../components/Footer";
 import { Reveal } from "../components/animations/Reveal";
 import { Stagger } from "../components/animations/Stagger";
+import { useMetaTags } from "../hooks/useMetaTags";
 import { supabase } from "../lib/supabase";
 
 type ServiceRecord = {
@@ -33,6 +34,13 @@ const iconMap: Record<string, LucideIcon> = {
 };
 
 export default function Services() {
+  useMetaTags({
+    title: "Our Services - Smart Brain TLC",
+    description:
+      "We provide personalized, high-quality tutoring for K–12 students and beyond. Sessions are flexible, engaging, and designed to boost confidence and performance.",
+    url: "https://smartbrainlearning.org/services",
+  });
+
   const [services, setServices] = useState<ServiceRecord[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

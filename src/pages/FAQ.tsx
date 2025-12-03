@@ -3,6 +3,7 @@ import { ChevronDown } from 'lucide-react';
 import { Header } from '../components/Header';
 import Footer from '../components/Footer';
 import { Reveal } from '../components/animations/Reveal';
+import { useMetaTags } from '../hooks/useMetaTags';
 
 interface FAQItem {
   question: string;
@@ -87,6 +88,12 @@ const faqData: FAQTab[] = [
 ];
 
 export default function FAQ() {
+  useMetaTags({
+    title: "Frequently Asked Questions - Smart Brain TLC",
+    description: "Find answers to common questions about credits, sessions, sponsorships, tutoring services, and more at Smart Brain TLC.",
+    url: "https://smartbrainlearning.org/faq",
+  });
+
   const [activeTab, setActiveTab] = useState(0);
   const [openItems, setOpenItems] = useState<Set<number>>(new Set());
 

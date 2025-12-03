@@ -78,6 +78,7 @@ import { Reveal } from "../components/animations/Reveal";
 import { Stagger } from "../components/animations/Stagger";
 import { TypingEffect } from "../components/TypingEffect";
 import { TestimonialsCarousel } from "../components/TestimonialsCarousel";
+import { useMetaTags } from "../hooks/useMetaTags";
 import {
   Users,
   TrendingUp,
@@ -90,6 +91,12 @@ import {
 } from "lucide-react";
 
 const Index = () => {
+  useMetaTags({
+    title: "Smart Brain TLC | Enroll One, Empower Two",
+    description:
+      "Smart Brain TLC is an accessible, online-first tutoring platform providing affordable, high-quality education — Enroll One, Empower Two.",
+    url: "https://smartbrainlearning.org/",
+  });
   const [inViewport, setInViewport] = useState(false);
   const [creditPlans, setCreditPlans] = useState<CreditPlan[]>([]);
   const [loadingPlans, setLoadingPlans] = useState(true);

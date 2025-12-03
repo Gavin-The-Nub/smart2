@@ -14,9 +14,15 @@ import {
   SelectValue,
 } from "../components/ui/select";
 import { Label } from "../components/ui/label";
+import { useMetaTags } from "../hooks/useMetaTags";
 import { MapPin, Phone, Mail, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function Contact() {
+  useMetaTags({
+    title: "Contact Us - Smart Brain TLC",
+    description: "Get in touch with Smart Brain TLC. Have questions about our tutoring services, sponsorship programs, or want to partner with us? Contact us today.",
+    url: "https://smartbrainlearning.org/contact",
+  });
   const [formData, setFormData] = useState({
     name: "",
     email: "",

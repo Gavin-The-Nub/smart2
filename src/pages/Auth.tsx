@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useMetaTags } from "@/hooks/useMetaTags";
 import {
   Eye,
   EyeOff,
@@ -50,6 +51,13 @@ const USER_ROLES = [
 type UserRole = "student" | "tutor";
 
 export default function Auth() {
+  useMetaTags({
+    title: "Sign In / Sign Up - Smart Brain TLC",
+    description: "Sign in or create an account with Smart Brain TLC. Join as a student looking for tutoring or as a tutor wanting to teach students.",
+    url: "https://smartbrainlearning.org/auth",
+    noindex: true, // Auth pages typically shouldn't be indexed
+  });
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState<UserRole>("student");

@@ -1,16 +1,18 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle, Users, Building, GraduationCap, Award } from 'lucide-react';
 import { Reveal } from '../components/animations/Reveal';
 import { Stagger } from '../components/animations/Stagger';
+import { useMetaTags } from '../hooks/useMetaTags';
 import studentsImage from '../assets/students-learning-together.jpg';
 import { Header } from '../components/Header';
 import Footer from '../components/Footer';
 
 const Sponsors = () => {
-  useEffect(() => {
-    document.title = 'Sponsors / Partner With Us — Smart Brain TLC';
-  }, []);
+  useMetaTags({
+    title: "Partner With Us — Smart Brain TLC | Enroll One, Empower Two",
+    description: "At Smart Brain TLC's Enroll One, Empower Two initiative, every enrollment funds an opportunity for another child. By partnering with us, you're not just giving lessons—you're giving hope.",
+    url: "https://smartbrainlearning.org/sponsors",
+  });
 
   return (
     <>

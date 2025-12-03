@@ -7,6 +7,7 @@ import { Check } from "lucide-react";
 import studentsLearningImage from "../assets/students-learning-together.jpg";
 import { useToast } from "@/hooks/use-toast";
 import { useGeolocation } from "@/hooks/useGeolocation";
+import { useMetaTags } from "@/hooks/useMetaTags";
 import { supabase } from "@/lib/supabase";
 
 interface CreditPlan {
@@ -28,6 +29,12 @@ interface CreditPlan {
 const CheckIcon = () => <Check className="w-5 h-5 text-green-500" />;
 
 export default function Pricing() {
+  useMetaTags({
+    title: "Pricing & Credits — Smart Brain TLC",
+    description: "Affordable, flexible credit-based pricing for high-quality tutoring sessions. Choose from US or Philippines pricing plans. Enroll One, Empower Two.",
+    url: "https://smartbrainlearning.org/pricing",
+  });
+
   const [activeTab, setActiveTab] = useState<"us" | "ph">("us");
   const [creditPlans, setCreditPlans] = useState<CreditPlan[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -35,10 +42,6 @@ export default function Pricing() {
   const [purchasingId, setPurchasingId] = useState<string | null>(null);
   const { toast } = useToast();
   const { location } = useGeolocation();
-
-  useEffect(() => {
-    document.title = "Pricing & Credits — Smart Brain TLC";
-  }, []);
 
   // Set region based on user's location
   useEffect(() => {

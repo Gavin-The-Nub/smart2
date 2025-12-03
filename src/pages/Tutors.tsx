@@ -3,8 +3,14 @@ import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Reveal } from "@/components/animations/Reveal";
 import { Stagger } from "@/components/animations/Stagger";
+import { useMetaTags } from "@/hooks/useMetaTags";
 
 export default function Tutors() {
+  useMetaTags({
+    title: "Teach with Purpose — Join Our Team | Smart Brain TLC",
+    description: "At Smart Brain TLC, we believe teaching is more than a job — it's a chance to empower underprivileged students and be part of a mission-driven community.",
+    url: "https://smartbrainlearning.org/tutors",
+  });
   return (
     <div className="min-h-screen bg-white">
       <Header />

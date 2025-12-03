@@ -1,17 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Header } from "../components/Header";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
 import { Reveal } from "../components/animations/Reveal";
 import { Stagger } from "../components/animations/Stagger";
+import { useMetaTags } from "../hooks/useMetaTags";
 import studentsImage from "../assets/students-learning-together.jpg";
 import { Dialog, DialogTrigger, DialogContent } from "../components/ui/dialog";
 import { ScrollArea } from "../components/ui/scroll-area";
 
 export default function About() {
-  useEffect(() => {
-    document.title = "About Us - Smart Brain TLC | Enroll One, Empower Two";
-  }, []);
+  useMetaTags({
+    title: "About Us - Smart Brain TLC | Enroll One, Empower Two",
+    description: "Smart Brain TLC Inc. is an accessible, online-first tutoring platform that provides students with affordable, high-quality instruction while giving back—when one student enrolls, another learner in need gets a tutorial for free.",
+    url: "https://smartbrainlearning.org/about",
+  });
 
   return (
     <div className="min-h-screen">

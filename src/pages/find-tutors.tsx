@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Reveal } from "../components/animations/Reveal";
 import { Header } from "../components/Header";
 import Footer from "../components/Footer";
+import { useMetaTags } from "../hooks/useMetaTags";
 import { supabase } from "../lib/supabase";
 
 const sortOptions = [
@@ -59,6 +60,12 @@ const TutorCard = ({ tutor }: any) => (
 );
 
 export default function FindTutors() {
+  useMetaTags({
+    title: "Find Tutors - Smart Brain TLC",
+    description: "Browse our team of qualified tutors and find the perfect match for your learning needs. Expert tutors available for K-12 and beyond.",
+    url: "https://smartbrainlearning.org/find-tutors",
+  });
+
   const [tutors, setTutors] = useState<Tutor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

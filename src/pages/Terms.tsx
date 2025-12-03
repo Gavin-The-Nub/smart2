@@ -1,7 +1,13 @@
 import React from 'react';
 import { Reveal } from '@/components/animations/Reveal';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 export default function Terms() {
+  useMetaTags({
+    title: "Terms & Conditions - Smart Brain TLC",
+    description: "Read the Terms & Conditions for Smart Brain TLC. Effective March 1, 2024. This page provides general information and does not constitute legal advice.",
+    url: "https://smartbrainlearning.org/legal/terms",
+  });
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}

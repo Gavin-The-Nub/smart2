@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import { Reveal } from '../components/animations/Reveal';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
+import { useMetaTags } from '../hooks/useMetaTags';
 import { Calendar, Clock, ArrowRight, BookOpen, Heart, Users, Star, TrendingUp } from 'lucide-react';
 
 const BLOG_POSTS = [
@@ -78,6 +79,12 @@ const CATEGORIES = [
 ];
 
 export default function Blog() {
+  useMetaTags({
+    title: "Blog & Resources - Smart Brain TLC",
+    description: "Explore resources, tips, and stories from Smart Brain TLC. Discover insights on education, learning strategies, and our impact on communities.",
+    url: "https://smartbrainlearning.org/blog",
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
