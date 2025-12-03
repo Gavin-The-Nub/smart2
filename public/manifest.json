@@ -1,0 +1,25 @@
+{
+  "name": "Smart Brain TLC | Enroll One, Empower Two",
+  "short_name": "Smart Brain TLC",
+  "description": "Smart Brain TLC is an accessible, online-first tutoring platform providing affordable, high-quality education — Enroll One, Empower Two.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563EB",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/lovable-uploads/dedb8a29-3bfd-47fd-87aa-3442ff73939d.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/lovable-uploads/dedb8a29-3bfd-47fd-87aa-3442ff73939d.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
