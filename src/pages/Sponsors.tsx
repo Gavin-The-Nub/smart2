@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { CheckCircle, Users, Building, GraduationCap, Award } from 'lucide-react';
 import { Reveal } from '../components/animations/Reveal';
 import { Stagger } from '../components/animations/Stagger';
@@ -6,6 +5,7 @@ import { useMetaTags } from '../hooks/useMetaTags';
 import studentsImage from '../assets/students-learning-together.jpg';
 import { Header } from '../components/Header';
 import Footer from '../components/Footer';
+import { useState } from 'react';
 
 const Sponsors = () => {
   useMetaTags({
@@ -13,6 +13,60 @@ const Sponsors = () => {
     description: "At Smart Brain TLC's Enroll One, Empower Two initiative, every enrollment funds an opportunity for another child. By partnering with us, you're not just giving lessons—you're giving hope.",
     url: "https://smartbrainlearning.org/sponsors",
   });
+
+  const [isLoadingType, setIsLoadingType] = useState<string | null>(null);
+
+  const handleStripeCheckout = async (
+    sponsorshipType: 'individual' | 'corporate' | 'school' | 'foundation',
+  ) => {
+    let amountInCents: number | undefined;
+
+    if (sponsorshipType === 'corporate' || sponsorshipType === 'school') {
+      const input = window.prompt('Enter sponsorship amount in USD (e.g., 100)', '100');
+      if (!input) return;
+
+      const parsed = Number(input);
+      if (Number.isNaN(parsed) || parsed <= 0) {
+        window.alert('Please enter a valid positive amount.');
+        return;
+      }
+
+      amountInCents = Math.round(parsed * 100);
+    }
+
+    try {
+      setIsLoadingType(sponsorshipType);
+
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: sponsorshipType,
+          amount: amountInCents,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to start checkout', await response.text());
+        window.alert('Unable to start checkout. Please try again.');
+        return;
+      }
+
+      const data = (await response.json()) as { url?: string };
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        window.alert('Unexpected response from payment server.');
+      }
+    } catch (error) {
+      console.error(error);
+      window.alert('An error occurred while starting checkout.');
+    } finally {
+      setIsLoadingType(null);
+    }
+  };
 
   return (
     <>
@@ -108,12 +162,14 @@ const Sponsors = () => {
                   Perfect for families or small groups
                 </li>
               </ul>
-              <a
-                href="#partner-inquiry"
-                className="mt-auto block py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors"
+              <button
+                type="button"
+                onClick={() => handleStripeCheckout('individual')}
+                disabled={isLoadingType === 'individual'}
+                className="mt-auto block w-full py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Sponsor a Student
-              </a>
+                {isLoadingType === 'individual' ? 'Processing...' : 'Sponsor for $30'}
+              </button>
             </div>
 
             {/* Corporate Partnerships */}
@@ -143,12 +199,14 @@ const Sponsors = () => {
                   CSR recognition
                 </li>
               </ul>
-              <a
-                href="#partner-inquiry"
-                className="mt-auto block py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors"
+              <button
+                type="button"
+                onClick={() => handleStripeCheckout('corporate')}
+                disabled={isLoadingType === 'corporate'}
+                className="mt-auto block w-full py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Partner with Us
-              </a>
+                {isLoadingType === 'corporate' ? 'Processing...' : 'Give as a Company'}
+              </button>
             </div>
 
             {/* Schools & Districts */}
@@ -174,12 +232,14 @@ const Sponsors = () => {
                   Make education a global initiative
                 </li>
               </ul>
-              <a
-                href="#partner-inquiry"
-                className="mt-auto block py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors"
+              <button
+                type="button"
+                onClick={() => handleStripeCheckout('school')}
+                disabled={isLoadingType === 'school'}
+                className="mt-auto block w-full py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Contact Us for School Pricing
-              </a>
+                {isLoadingType === 'school' ? 'Processing...' : 'Sponsor as a School/District'}
+              </button>
             </div>
 
             {/* Foundations & Grants */}
@@ -205,12 +265,16 @@ const Sponsors = () => {
                   Shareable student success stories
                 </li>
               </ul>
-              <a
-                href="#partner-inquiry"
-                className="mt-auto block py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors"
+              <button
+                type="button"
+                onClick={() => handleStripeCheckout('foundation')}
+                disabled={isLoadingType === 'foundation'}
+                className="mt-auto block w-full py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Request a Grant Proposal
-              </a>
+                {isLoadingType === 'foundation'
+                  ? 'Processing...'
+                  : 'Start $10/month Sponsorship'}
+              </button>
             </div>
           </Stagger>
         </div>
