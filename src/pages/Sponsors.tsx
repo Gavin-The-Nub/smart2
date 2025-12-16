@@ -61,155 +61,151 @@ const Sponsors = () => {
         </div>
       </section>
 
-      {/* Partnership Blocks Section */}
+      {/* Sponsorship Types Section */}
       <section className="bg-[#F7FAFD] py-20">
         <div className="mx-auto max-w-[1200px] px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start mb-12">
             <div>
               <Reveal>
                 <h2 className="text-3xl md:text-4xl font-bold font-heading">
-                  <span>Partnership </span>
+                  <span>Sponsorship </span>
                   <span className="text-blue-500">Opportunities </span>
                   <br />
-                  <span>for every impact level</span>
+                  <span>for every heart to give</span>
                 </h2>
               </Reveal>
             </div>
             <div>
               <Reveal delay={200}>
                 <p className="text-blueGray-400 leading-loose">
-                  Choose the partnership level that matches your commitment to educational equity and student success.
+                  Choose the sponsorship option that best matches how you’d like to support our students and schools.
                 </p>
               </Reveal>
             </div>
           </div>
 
           <Stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" baseDelay={300} step={200}>
-            {/* Individual & Monthly Sponsorships */}
+            {/* 1. Tutoring Sponsorship */}
             <div className="h-full flex flex-col rounded-3xl bg-white shadow-lg ring-1 ring-slate-100 p-8 hover:shadow-xl transition-all duration-300">
               <div className="mx-auto mb-6 h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
                 <Users size={28} className="text-blue-500" />
               </div>
-              <h3 className="mb-4 font-bold font-heading text-xl">Individual & Monthly Sponsorships</h3>
+              <h3 className="mb-4 font-bold font-heading text-xl">Tutoring Sponsorship</h3>
               <p className="text-sm text-blueGray-400 leading-relaxed mb-6">
-                Empower a child, lesson by lesson. Sponsor a student's tutoring journey through a one-time gift or recurring monthly sponsorship.
+                For **$30**, you can sponsor **1 student in the U.S. and 1 student outside the U.S.** with quality tutoring support.
               </p>
               <ul className="text-left text-sm text-blueGray-400 mb-6 space-y-2">
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Sponsor from one lesson up to a year
+                  Directly funds tutoring hours for two students
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Receive updates and thank-you notes
+                  Helps bridge learning gaps and build confidence
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Perfect for families or small groups
+                  A simple, powerful way to make an immediate impact
                 </li>
               </ul>
               <a
                 href="#partner-inquiry"
                 className="mt-auto block py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors"
               >
-                Sponsor a Student
+                Sponsor Tutoring
               </a>
             </div>
 
-            {/* Corporate Partnerships */}
+            {/* 2. School Supplies Sponsorship */}
             <div className="h-full flex flex-col rounded-3xl bg-white shadow-lg ring-1 ring-slate-100 p-8 hover:shadow-xl transition-all duration-300">
               <div className="mx-auto mb-6 h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
                 <Building size={28} className="text-blue-500" />
               </div>
-              <h3 className="mb-4 font-bold font-heading text-xl">Corporate Partnerships</h3>
+              <h3 className="mb-4 font-bold font-heading text-xl">School Supplies Sponsorship</h3>
               <p className="text-sm text-blueGray-400 leading-relaxed mb-6">
-                Turn your brand into a force for change. Engage employees and showcase CSR.
+                Give students the tools they need to learn—backpacks, notebooks, pencils, and more. **Any amount** helps.
               </p>
               <ul className="text-left text-sm text-blueGray-400 mb-6 space-y-2">
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Employee matching programs
+                  Helps provide basic and essential school supplies
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Cause marketing campaigns
+                  Reduces barriers for students who come to school without materials
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Branded scholarships
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  CSR recognition
+                  Great option for individuals, families, and small groups
                 </li>
               </ul>
               <a
                 href="#partner-inquiry"
                 className="mt-auto block py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors"
               >
-                Partner with Us
+                Sponsor School Supplies
               </a>
             </div>
 
-            {/* Schools & Districts */}
+            {/* 3. Public School Funds Sponsorship */}
             <div className="h-full flex flex-col rounded-3xl bg-white shadow-lg ring-1 ring-slate-100 p-8 hover:shadow-xl transition-all duration-300">
               <div className="mx-auto mb-6 h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
                 <GraduationCap size={28} className="text-blue-500" />
               </div>
-              <h3 className="mb-4 font-bold font-heading text-xl">Schools & Districts</h3>
+              <h3 className="mb-4 font-bold font-heading text-xl">Public School Funds Sponsorship</h3>
               <p className="text-sm text-blueGray-400 leading-relaxed mb-6">
-                Educate locally, impact globally. Bulk credits + progress reports.
+                Support **public schools** with additional resources, programs, and academic support. **Any amount** is welcome.
               </p>
               <ul className="text-left text-sm text-blueGray-400 mb-6 space-y-2">
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Discounted bulk packages
+                  Helps strengthen under-resourced public schools
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Reports for own + sponsored students
+                  Can be directed toward enrichment, tutoring, or special projects
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Make education a global initiative
+                  Ideal for donors passionate about public education
                 </li>
               </ul>
               <a
                 href="#partner-inquiry"
                 className="mt-auto block py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors"
               >
-                Contact Us for School Pricing
+                Support Public School Funds
               </a>
             </div>
 
-            {/* Foundations & Grants */}
+            {/* 4. Monthly Sponsorship */}
             <div className="h-full flex flex-col rounded-3xl bg-white shadow-lg ring-1 ring-slate-100 p-8 hover:shadow-xl transition-all duration-300">
               <div className="mx-auto mb-6 h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
                 <Award size={28} className="text-blue-500" />
               </div>
-              <h3 className="mb-4 font-bold font-heading text-xl">Foundations & Grants</h3>
+              <h3 className="mb-4 font-bold font-heading text-xl">Monthly Sponsorship</h3>
               <p className="text-sm text-blueGray-400 leading-relaxed mb-6">
-                Invest in measurable outcomes. Fully customizable partnerships.
+                Set up a **monthly gift** that we will carefully distribute across the three sponsorship areas above.
               </p>
               <ul className="text-left text-sm text-blueGray-400 mb-6 space-y-2">
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Custom program design
+                  Automatically supports tutoring, school supplies, and public school funds
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Transparent reporting
+                  Provides steady, predictable support for students and schools
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-                  Shareable student success stories
+                  Flexible amount—give what fits your heart and budget
                 </li>
               </ul>
               <a
                 href="#partner-inquiry"
                 className="mt-auto block py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors"
               >
-                Request a Grant Proposal
+                Start a Monthly Sponsorship
               </a>
             </div>
           </Stagger>
@@ -362,14 +358,14 @@ const Sponsors = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Type of Partnership
+                      Type of Sponsorship
                     </label>
                     <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                      <option>Select partnership type</option>
-                      <option>Corporate</option>
-                      <option>School</option>
-                      <option>Foundation</option>
-                      <option>Individual</option>
+                      <option>Select sponsorship type</option>
+                      <option>Tutoring Sponsorship ($30 for 1 US + 1 international student)</option>
+                      <option>School Supplies Sponsorship (any amount)</option>
+                      <option>Public School Funds Sponsorship (any amount)</option>
+                      <option>Monthly Sponsorship (distributed across all three)</option>
                     </select>
                   </div>
                   <div>
