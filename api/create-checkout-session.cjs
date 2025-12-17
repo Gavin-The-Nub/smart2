@@ -154,3 +154,4 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'Unable to create checkout session' });
   }
 };
+

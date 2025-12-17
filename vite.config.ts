@@ -7,6 +7,13 @@ export default defineConfig({
   server: {
     host: "::",
     port: 8080,
+    proxy: {
+      // Proxy API requests to local Express server during development
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
+    },
   },
   plugins: [react()],
   resolve: {
