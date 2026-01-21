@@ -133,10 +133,10 @@ export default function Footer() {
               <li>
                 <span className="block font-medium text-slate-700">Email</span>
                 <a
-                  href="mailto:sbtlcmanager@gmail.com"
+                  href="mailto:admin@smartbrainlearning.org"
                   className="text-blue-600 hover:text-blue-700"
                 >
-                  sbtlcmanager@gmail.com
+                  admin@smartbrainlearning.org
                 </a>
               </li>
             </ul>

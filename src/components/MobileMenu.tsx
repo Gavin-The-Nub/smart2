@@ -215,10 +215,10 @@ export function MobileMenu({
             <p className="text-xs text-blueGray-400 mb-4">
               <span>Get in Touch: </span>
               <a
-                href="mailto:sbtlcmanager@gmail.com"
+                href="mailto:admin@smartbrainlearning.org"
                 className="text-blue-500 hover:text-blue-600 underline"
               >
-                sbtlcmanager@gmail.com
+               admin@smartbrainlearning.org
               </a>
             </p>
           </div>
