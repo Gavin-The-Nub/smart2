@@ -173,7 +173,7 @@ const Index = () => {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
                     className="btn-primary py-4 px-8 wow animate__animated animate__fadeIn hover-up-2 text-center"
-                    href="/auth"
+                    href="https://app.smartbrainlearning.org/login"
                   >
                     Find a tutor
                   </a>
@@ -659,7 +659,7 @@ const Index = () => {
                                   ? "border border-blue-400 hover:border-blue-400"
                                   : "text-blueGray-500 hover:text-blueGray-600 bg-white border border-blueGray-200 hover:border-blueGray-300"
                               }`}
-                              href="/auth"
+                              href="https://app.smartbrainlearning.org/login"
                             >
                               Purchase
                             </a>
