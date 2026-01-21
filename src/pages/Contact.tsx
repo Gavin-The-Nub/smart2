@@ -15,7 +15,9 @@ import {
 } from "../components/ui/select";
 import { Label } from "../components/ui/label";
 import { useMetaTags } from "../hooks/useMetaTags";
-import { MapPin, Phone, Mail, CheckCircle, AlertCircle } from "lucide-react";
+import { Mail, CheckCircle, AlertCircle } from "lucide-react";
+
+const SUPPORT_EMAIL = "admin@smartbrainlearning.org";
 
 export default function Contact() {
   useMetaTags({
@@ -52,7 +54,7 @@ export default function Contact() {
 
     try {
       const templateParams = {
-        to_email: import.meta.env.VITE_EMAILJS_TO_EMAIL,
+        to_email: SUPPORT_EMAIL,
         from_name: formData.name,
         from_email: formData.email,
         phone: formData.phone || "Not provided",
@@ -271,65 +273,23 @@ export default function Contact() {
                   </h3>
 
                   <div className="space-y-6">
-                    {/* US Address */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-slate-900">US Office</p>
-                        <p className="text-slate-600">
-                          5830 E 2nd St, Ste 7000
-                          <br />
-                          Casper, Wyoming 82609 US
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Philippines Address */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-slate-900">
-                          Philippines Office
-                        </p>
-                        <p className="text-slate-600">
-                          J and J Arcade Bldg. Lawaan 1<br />
-                          Talisay Cebu 6045
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Phone Numbers */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-slate-900">Phone</p>
-                        <p className="text-slate-600">
-                          US: +1 805 317 4524
-                          <br />
-                          Philippines: 0908 527 1364
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Email */}
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                         <Mail className="w-5 h-5 text-blue-600" />
                       </div>
                       <div>
-                        <p className="font-medium text-slate-900">Email</p>
+                        <p className="font-medium text-slate-900">
+                          Email our team
+                        </p>
                         <a
-                          href="mailto:sbtlcmanager@gmail.com"
+                          href={`mailto:${SUPPORT_EMAIL}`}
                           className="text-blue-600 hover:text-blue-700 font-medium"
                         >
-                          sbtlcmanager@gmail.com
+                          {SUPPORT_EMAIL}
                         </a>
+                        <p className="text-slate-600 mt-1">
+                          We monitor this inbox for all inquiries.
+                        </p>
                       </div>
                     </div>
                   </div>
