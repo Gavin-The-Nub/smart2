@@ -758,12 +758,7 @@ const Index = () => {
               <p className="text-slate-600 leading-relaxed mb-4">
                 Test prep, homework support, and study skills.
               </p>
-              <a
-                href="/programs"
-                className="text-sm text-orange-600 hover:text-orange-700 font-medium transition-colors"
-              >
-                Learn More →
-              </a>
+            
             </div>
             {/* Card 3: Partner to Build */}
             <div className="bg-white rounded-3xl p-8 shadow-lg ring-1 ring-slate-100 hover:shadow-xl transition">
@@ -800,12 +795,7 @@ const Index = () => {
               <p className="text-slate-600 leading-relaxed mb-4">
                 Track progress and celebrate improvements.
               </p>
-              <a
-                href="/testimonials"
-                className="text-sm text-green-600 hover:text-green-700 font-medium transition-colors"
-              >
-                Student Success →
-              </a>
+             
             </div>
           </div>
         </div>
@@ -992,7 +982,7 @@ const Index = () => {
                   2
                 </div>
                 <LottieBlock
-                  src="/animations/time.json"
+                  src="/animations/Time.json"
                   title="Flexible Hours"
                   className="mx-auto mb-6 overflow-hidden rounded-xl"
                   width={320}

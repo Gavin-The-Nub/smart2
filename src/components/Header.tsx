@@ -209,10 +209,10 @@ export function Header() {
                 className="relative flex items-center h-full"
                 ref={(el) => (dropdownRefs.current[idx] = el)}
                 onMouseEnter={() =>
-                  hasDropdown && !isPinned && setOpenDropdown(idx)
+                  hasDropdown && setOpenDropdown(idx)
                 }
                 onMouseLeave={() =>
-                  hasDropdown && !isPinned && setOpenDropdown(null)
+                  hasDropdown && setOpenDropdown(null)
                 }
                 onFocus={hasDropdown ? () => setOpenDropdown(idx) : undefined}
                 onBlur={hasDropdown ? (e) => handleNavBlur(e, idx) : undefined}
@@ -225,12 +225,6 @@ export function Header() {
                   aria-expanded={isOpen}
                   aria-controls={hasDropdown ? `nav-popover-${idx}` : undefined}
                   tabIndex={0}
-                  onClick={() => {
-                    if (hasDropdown) {
-                      setOpenDropdown(idx);
-                      setDropdownPinned(isPinned ? null : idx);
-                    }
-                  }}
                   onKeyDown={(e) => handleNavKeyDown(e, idx, hasDropdown)}
                   style={{ minWidth: 44, minHeight: 44 }}
                 >
@@ -246,6 +240,10 @@ export function Header() {
                     />
                   )}
                 </button>
+                {/* Invisible bridge to prevent dropdown from closing */}
+                {hasDropdown && isOpen && (
+                  <div className="absolute left-0 top-full w-full h-2 bg-transparent" />
+                )}
                 {/* Dropdown Popover */}
                 {hasDropdown && (
                   <ul

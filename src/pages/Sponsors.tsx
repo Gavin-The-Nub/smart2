@@ -89,9 +89,7 @@ const Sponsors = () => {
                   <a className="btn-primary py-4 px-8 wow animate__animated animate__fadeIn hover-up-2 text-center" href="#partner-inquiry">
                     Sponsor a Student
                   </a>
-                  <a className="btn-white wow animate__animated animate__fadeIn hover-up-2 text-center" data-wow-delay=".3s" href="#partner-inquiry">
-                    Become a Partner Today
-                  </a>
+                  
                 </div>
               </div>
             </div>

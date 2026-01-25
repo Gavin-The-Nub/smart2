@@ -35,26 +35,7 @@ export default function Footer() {
           <nav aria-label="Explore">
             <h3 className="text-sm font-semibold text-slate-900">Explore</h3>
             <ul className="mt-4 space-y-2 text-sm text-slate-600">
-              <li>
-                <a href="/#learn" className="hover:text-slate-900">
-                  Learn
-                </a>
-              </li>
-              <li>
-                <a href="/#programs" className="hover:text-slate-900">
-                  Programs
-                </a>
-              </li>
-              <li>
-                <a href="/#get-involved" className="hover:text-slate-900">
-                  Get Involved
-                </a>
-              </li>
-              <li>
-                <a href="/#support" className="hover:text-slate-900">
-                  Support
-                </a>
-              </li>
+            
               <li>
                 <a href="/pricing" className="hover:text-slate-900">
                   Pricing &amp; Credits

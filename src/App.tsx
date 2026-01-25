@@ -20,6 +20,7 @@ import Accessibility from "./pages/Accessibility";
 import NotFound from "./pages/NotFound";
 import FindTutors from "./pages/find-tutors";
 import Auth from "./pages/Auth";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 import { ThemeProvider } from "next-themes";
 
@@ -29,6 +30,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />

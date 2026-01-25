@@ -47,15 +47,7 @@ export default function About() {
                 </Reveal>
                 <Reveal delay={300}>
                   <div className="text-center lg:text-left">
-                    <Button className="mr-4 mb-4 bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-lg">
-                      Book Tutoring
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="px-8 py-4 rounded-lg border-blueGray-200 text-blueGray-600 hover:border-blueGray-300"
-                    >
-                      Partner With Us
-                    </Button>
+                   
                   </div>
                 </Reveal>
               </div>
@@ -330,14 +322,9 @@ export default function About() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-lg">
-                  Book Tutoring
+                <a href="https://app.smartbrainlearning.org/">Book Tutoring</a>
                 </Button>
-                <Button
-                  variant="outline"
-                  className="px-8 py-4 rounded-lg border-blueGray-200 text-blueGray-600 hover:border-blueGray-300"
-                >
-                  Partner With Us
-                </Button>
+                
               </div>
             </div>
           </Reveal>

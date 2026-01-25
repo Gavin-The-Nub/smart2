@@ -178,14 +178,9 @@ export default function Blog() {
                         {post.title}
                       </h2>
                       
-                      <p className="text-slate-600 mb-4 line-clamp-3">
+                      <p className="text-slate-600 line-clamp-3">
                         {post.excerpt}
                       </p>
-
-                      <button className="inline-flex items-center gap-2 text-blue-600 font-medium hover:text-blue-700 transition-colors">
-                        Read More
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </button>
                     </div>
                   </article>
                 </Reveal>
@@ -195,37 +190,7 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Newsletter CTA */}
-      <section className="py-16 lg:py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
-        <div className="max-w-[1200px] mx-auto px-4 md:px-6">
-          <Reveal delay={100}>
-            <div className="bg-white rounded-2xl border border-slate-200 p-8 lg:p-12 text-center max-w-2xl mx-auto">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <BookOpen className="w-8 h-8 text-blue-600" />
-              </div>
-              
-              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 mb-4">
-                Stay Updated
-              </h2>
-              
-              <p className="text-slate-600 mb-8">
-                Subscribe to our newsletter for the latest educational resources, success stories, and updates from Smart Brain TLC.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]">
-                  Subscribe
-                </Button>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+  
 
       <Footer />
     </div>

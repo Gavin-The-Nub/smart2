@@ -93,7 +93,7 @@ export default function Tutors() {
               step={150}
             >
               {/* Flexible Hours */}
-              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 hover:shadow-lg transition-all duration-300">
+              <div className="h-full flex flex-col text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 hover:shadow-lg transition-all duration-300">
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg
                     className="w-8 h-8 text-white"
@@ -112,13 +112,13 @@ export default function Tutors() {
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   Flexible Hours
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 flex-grow">
                   Set your own schedule and work when it fits your life
                 </p>
               </div>
 
               {/* Competitive Pay */}
-              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-green-50 to-green-100 hover:shadow-lg transition-all duration-300">
+              <div className="h-full flex flex-col text-center p-6 rounded-xl bg-gradient-to-br from-green-50 to-green-100 hover:shadow-lg transition-all duration-300">
                 <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg
                     className="w-8 h-8 text-white"
@@ -137,13 +137,13 @@ export default function Tutors() {
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   Competitive Pay
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 flex-grow">
                   Earn competitive rates for your expertise and dedication
                 </p>
               </div>
 
               {/* Make a Difference */}
-              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-all duration-300">
+              <div className="h-full flex flex-col text-center p-6 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-all duration-300">
                 <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg
                     className="w-8 h-8 text-white"
@@ -162,13 +162,13 @@ export default function Tutors() {
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   Opportunity to Make a Difference
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 flex-grow">
                   Help students reach their potential and change lives
                 </p>
               </div>
 
               {/* Supportive Team */}
-              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 hover:shadow-lg transition-all duration-300">
+              <div className="h-full flex flex-col text-center p-6 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 hover:shadow-lg transition-all duration-300">
                 <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg
                     className="w-8 h-8 text-white"
@@ -187,13 +187,13 @@ export default function Tutors() {
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   Supportive and Passionate Team
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 flex-grow">
                   Join a community of dedicated educators who support each other
                 </p>
               </div>
 
               {/* Teach with Purpose */}
-              <div className="text-center p-6 rounded-xl bg-gradient-to-br from-teal-50 to-teal-100 hover:shadow-lg transition-all duration-300 md:col-span-2 lg:col-span-1">
+              <div className="h-full flex flex-col text-center p-6 rounded-xl bg-gradient-to-br from-teal-50 to-teal-100 hover:shadow-lg transition-all duration-300">
                 <div className="w-16 h-16 bg-teal-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <svg
                     className="w-8 h-8 text-white"
@@ -212,7 +212,7 @@ export default function Tutors() {
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   Teach with Purpose, Not Just for Pay
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 flex-grow">
                   Be part of our "Enroll One, Empower Two" mission
                 </p>
               </div>
@@ -246,9 +246,7 @@ export default function Tutors() {
                 >
                   Apply Now
                 </a>
-                <button className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all duration-300">
-                  Learn More
-                </button>
+               
               </div>
             </Reveal>
           </div>

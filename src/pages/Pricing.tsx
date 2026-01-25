@@ -372,19 +372,16 @@ export default function Pricing() {
 
                       {/* CTAs */}
                       <div className="space-y-3">
-                        <button
-                          onClick={() => handleDemoPurchase(plan.id)}
-                          disabled={!!purchasingId}
-                          className={`block w-full py-3 px-6 text-sm font-semibold rounded-lg transition-colors ${
+                        <a
+                          href="https://app.smartbrainlearning.org/"
+                          className={`block w-full py-3 px-6 text-sm font-semibold rounded-lg transition-colors text-center ${
                             plan.isPopular
                               ? "bg-white text-[#2563EB] hover:bg-slate-50"
                               : "bg-[#2563EB] text-white hover:bg-[#1d4ed8]"
-                          } disabled:opacity-50`}
+                          }`}
                         >
-                          {purchasingId === plan.id
-                            ? "Processing..."
-                            : plan.primaryCta}
-                        </button>
+                          {plan.primaryCta}
+                        </a>
                         <a
                           href="/faq#credits"
                           className={`block w-full py-3 px-6 text-sm font-medium rounded-lg transition-colors ${
@@ -544,13 +541,7 @@ export default function Pricing() {
       {/* Footnote */}
       <section className="py-10 border-t border-slate-200">
         <div className="max-w-[1200px] mx-auto px-6">
-          <Reveal>
-            <p className="text-sm text-slate-500 text-center">
-              Credits are valid for 6 months from the date of purchase. Unused
-              credits will expire after this period. Contact us for custom
-              enterprise plans or bulk discounts.
-            </p>
-          </Reveal>
+        
         </div>
       </section>
 

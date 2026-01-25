@@ -101,7 +101,8 @@ export default function Accessibility() {
                   <p className="text-gray-700 mb-2">Philippines Office: J and J Arcade Bldg. Lawaan 1, Talisay Cebu 6045</p>
                   <p className="text-gray-700 mb-2">US Phone: +1 805 317 4524</p>
                   <p className="text-gray-700 mb-2">Philippines Phone: 0908 527 1364</p>
-                  <p className="text-gray-700">Email: [Contact email coming soon]</p>
+                  <p className="text-gray-700">Email:admin@smartbrainlearning.org
+</p>
                 </div>
               </Reveal>
 
