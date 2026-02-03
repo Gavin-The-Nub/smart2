@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { cms } from "../lib/cms";
+import { CoreValue } from "../data/cms-sample";
 import { Header } from "../components/Header";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
@@ -15,6 +17,12 @@ export default function About() {
     description: "Smart Brain TLC Inc. is an accessible, online-first tutoring platform that provides students with affordable, high-quality instruction while giving back—when one student enrolls, another learner in need gets a tutorial for free.",
     url: "https://smartbrainlearning.org/about",
   });
+
+  const [coreValues, setCoreValues] = useState<CoreValue[]>([]);
+
+  useEffect(() => {
+    cms.getCoreValues().then(setCoreValues).catch(err => console.error(err));
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -155,36 +163,9 @@ export default function About() {
 
           <Stagger baseDelay={400} step={150}>
             <div className="flex flex-wrap justify-center -mx-3">
-              {[
-                {
-                  value: "Empowerment",
-                  icon: "💪",
-                  description:
-                    "Enabling students to reach their full potential",
-                },
-                {
-                  value: "Equity",
-                  icon: "⚖️",
-                  description: "Ensuring fair access to quality education",
-                },
-                {
-                  value: "Integrity",
-                  icon: "🤝",
-                  description: "Honest and transparent in all our interactions",
-                },
-                {
-                  value: "Innovation",
-                  icon: "💡",
-                  description: "Continuously improving our teaching methods",
-                },
-                {
-                  value: "Community",
-                  icon: "🌍",
-                  description: "Building connections that last beyond tutoring",
-                },
-              ].map((item, index) => (
+              {coreValues.map((item, index) => (
                 <div
-                  key={item.value}
+                  key={item.id}
                   className="w-1/2 md:w-1/3 lg:w-1/5 px-3 mb-8"
                 >
                   <div className="text-center bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 h-full">

@@ -1,48 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-interface TestimonialSlide {
-  id: number;
-  image: string;
-  title: string;
-  company: string;
-  alt: string;
-  rating: number;
-}
-
-const testimonialSlides: TestimonialSlide[] = [
-  {
-    id: 1,
-    image: "/vendor/monst/img/placeholders/img-1.png",
-    title: "“Confidence and grades went up fast.”",
-    company: "Alicia R. · Austin, TX",
-    alt: "Parent reviewing progress charts",
-    rating: 4.8
-  },
-  {
-    id: 2,
-    image: "/vendor/monst/img/placeholders/img-2.jpg",
-    title: "“Scheduling is flexible, results are real.”",
-    company: "Harvey M. · San Diego, CA",
-    alt: "Student showing progress report",
-    rating: 4.7
-  },
-  {
-    id: 3,
-    image: "/vendor/monst/img/placeholders/img-3.jpg",
-    title: "“Our son finally enjoys studying again.”",
-    company: "Kim L. · Seattle, WA",
-    alt: "Student smiling with books",
-    rating: 5
-  },
-  {
-    id: 4,
-    image: "/vendor/monst/img/placeholders/img-4.jpg",
-    title: "“Tutors are patient and really skilled.”",
-    company: "Deena P. · Denver, CO",
-    alt: "Tutor helping student",
-    rating: 4.9
-  }
-];
+import { cms } from '../lib/cms';
 
 // Star and Stars components for ratings
 const Star = ({ className = "" }: { className?: string }) => (
@@ -81,6 +38,30 @@ function Stars({ value }: { value: number }) {
 export const TestimonialsCarousel: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [testimonialSlides, setTestimonialSlides] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const reviews = await cms.getReviews();
+        const slides = reviews.map((r, i) => ({
+          id: r.id, 
+          image: r.avatarUrl || `/vendor/monst/img/placeholders/img-${(i % 4) + 1}.jpg`, // Fallback
+          title: `“${r.content.substring(0, 60)}${r.content.length > 60 ? '...' : ''}”`,
+          company: `${r.name} · ${r.role} ${r.location ? `· ${r.location}` : ''}`,
+          alt: `${r.name} testimonial`,
+          rating: r.rating
+        }));
+        setTestimonialSlides(slides);
+      } catch (err) {
+        console.error("Failed to load reviews", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchReviews();
+  }, []);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -94,10 +75,12 @@ export const TestimonialsCarousel: React.FC = () => {
   }, []);
 
   const nextSlide = () => {
+    if (testimonialSlides.length === 0) return;
     setCurrentSlide((prev) => (prev + 1) % testimonialSlides.length);
   };
 
   const prevSlide = () => {
+    if (testimonialSlides.length === 0) return;
     setCurrentSlide((prev) => (prev - 1 + testimonialSlides.length) % testimonialSlides.length);
   };
 
@@ -109,6 +92,14 @@ export const TestimonialsCarousel: React.FC = () => {
     const slideWidth = isDesktop ? 50 : 100;
     return `-${currentSlide * slideWidth}%`;
   };
+
+  if (loading) {
+     return <div className="py-24 text-center">Loading reviews...</div>;
+  }
+
+  if (testimonialSlides.length === 0) {
+      return null; // Or some empty state
+  }
 
   return (
     <section id="testimonials" className="py-24 bg-white">
@@ -141,7 +132,7 @@ export const TestimonialsCarousel: React.FC = () => {
                       <img 
                         src={slide.image}
                         alt={slide.alt}
-                        className="w-full h-[320px] object-cover"
+                        className="w-full h-[320px] object-cover bg-gray-100"
                       />
                     </div>
                     <div className="mt-5 flex items-start justify-between gap-4">

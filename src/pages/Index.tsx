@@ -88,7 +88,13 @@ import {
   PieChart,
   Briefcase,
   Coins,
+  HeartHandshake,
+  GraduationCap,
+  BrainCircuit,
+  CalendarClock,
 } from "lucide-react";
+import { cms } from "../lib/cms";
+import { WhyChooseUsItem } from "../data/cms-sample";
 
 const Index = () => {
   useMetaTags({
@@ -98,6 +104,23 @@ const Index = () => {
     url: "https://smartbrainlearning.org/",
   });
   const [inViewport, setInViewport] = useState(false);
+  const [whyChooseUsItems, setWhyChooseUsItems] = useState<WhyChooseUsItem[]>([]);
+
+  useEffect(() => {
+    cms.getWhyChooseUs().then(setWhyChooseUsItems).catch(err => console.error(err));
+  }, []);
+
+  const iconMap: Record<string, React.ElementType> = {
+    HeartHandshake,
+    GraduationCap,
+    BrainCircuit,
+    CalendarClock,
+    BarChart3,
+    PieChart,
+    Briefcase,
+    CheckCircle,
+    Lightbulb
+  };
   const [creditPlans, setCreditPlans] = useState<CreditPlan[]>([]);
   const [loadingPlans, setLoadingPlans] = useState(true);
   const [activeTab, setActiveTab] = useState<"us" | "ph">("us");
@@ -723,80 +746,39 @@ const Index = () => {
           </div>
           {/* Cards grid (must NOT be inside the header grid) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Card 1: Interactive Learning */}
-            <div className="bg-white rounded-3xl p-8 shadow-lg ring-1 ring-slate-100 hover:shadow-xl transition">
-              <div className="w-12 h-12 bg-[#EEF4FF] rounded-xl mb-6 flex items-center justify-center">
-                <BarChart3
-                  className="w-6 h-6 text-[#2563EB]"
-                  aria-hidden="true"
-                />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">
-                Flexible Online Tutoring
-              </h3>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                Credits-based booking with expert tutors.
-              </p>
-              <a
-                href="/pricing"
-                className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
-              >
-                Book Tutoring →
-              </a>
-            </div>
-            {/* Card 2: Empower Others */}
-            <div className="bg-white rounded-3xl p-8 shadow-lg ring-1 ring-slate-100 hover:shadow-xl transition">
-              <div className="w-12 h-12 bg-[#FEF3C7] rounded-xl mb-6 flex items-center justify-center">
-                <PieChart
-                  className="w-6 h-6 text-[#D97706]"
-                  aria-hidden="true"
-                />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">
-                Flexible Programs
-              </h3>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                Test prep, homework support, and study skills.
-              </p>
-            
-            </div>
-            {/* Card 3: Partner to Build */}
-            <div className="bg-white rounded-3xl p-8 shadow-lg ring-1 ring-slate-100 hover:shadow-xl transition">
-              <div className="w-12 h-12 bg-[#F3E8FF] rounded-xl mb-6 flex items-center justify-center">
-                <Briefcase
-                  className="w-6 h-6 text-[#9333EA]"
-                  aria-hidden="true"
-                />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">
-                Family-Focused Approach
-              </h3>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                Supporting your child's academic journey.
-              </p>
-              <a
-                href="/about"
-                className="text-sm text-purple-600 hover:text-purple-700 font-medium transition-colors"
-              >
-                Our Philosophy →
-              </a>
-            </div>
-            {/* Card 4: Building Community */}
-            <div className="bg-white rounded-3xl p-8 shadow-lg ring-1 ring-slate-100 hover:shadow-xl transition">
-              <div className="w-12 h-12 bg-[#ECFDF5] rounded-xl mb-6 flex items-center justify-center">
-                <CheckCircle
-                  className="w-6 h-6 text-[#10B981]"
-                  aria-hidden="true"
-                />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">
-                Proven Results
-              </h3>
-              <p className="text-slate-600 leading-relaxed mb-4">
-                Track progress and celebrate improvements.
-              </p>
-             
-            </div>
+            {whyChooseUsItems.length > 0 ? (
+              whyChooseUsItems.map((item, idx) => {
+                const Icon = iconMap[item.iconName] || Lightbulb;
+                // Alternate colors for variety if desired, or stick to a consistent style.
+                // Using a cycle of background colors similar to the hardcoded ones:
+                // Blue, Amber, Purple, Emerald
+                const bgColors = ["bg-[#EEF4FF]", "bg-[#FEF3C7]", "bg-[#F3E8FF]", "bg-[#ECFDF5]"];
+                const iconColors = ["text-[#2563EB]", "text-[#D97706]", "text-[#9333EA]", "text-[#10B981]"];
+                
+                const bgClass = bgColors[idx % bgColors.length];
+                const iconClass = iconColors[idx % iconColors.length];
+
+                return (
+                  <div key={item.id} className="bg-white rounded-3xl p-8 shadow-lg ring-1 ring-slate-100 hover:shadow-xl transition">
+                    <div className={`w-12 h-12 ${bgClass} rounded-xl mb-6 flex items-center justify-center`}>
+                      <Icon
+                        className={`w-6 h-6 ${iconClass}`}
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-4">
+                      {item.title}
+                    </h3>
+                    <p className="text-slate-600 leading-relaxed mb-4">
+                      {item.description}
+                    </p>
+                    {/* Optional: Add CTA if needed, logic can be added to CMS if links vary */}
+                  </div>
+                );
+              })
+            ) : (
+               <div className="col-span-full text-center text-slate-500">Loading highlights...</div>
+            )}
           </div>
         </div>
       </section>
