@@ -1,74 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Header } from '../components/Header';
 import Footer from '../components/Footer';
 import { Reveal } from '../components/animations/Reveal';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { useMetaTags } from '../hooks/useMetaTags';
-import { Calendar, Clock, ArrowRight, BookOpen, Heart, Users, Star, TrendingUp } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, BookOpen, Heart, Users, Star, TrendingUp, Loader2 } from 'lucide-react';
+import { useBlogs } from '../hooks/use-blogs';
+import { format } from 'date-fns';
 
-const BLOG_POSTS = [
-  {
-    id: 1,
-    title: "5 Proven Study Techniques That Boost Student Performance",
-    excerpt: "Discover evidence-based learning strategies that help students retain information better and improve their academic outcomes.",
-    category: "Learning Tips",
-    date: "December 15, 2024",
-    readTime: "5 min read",
-    image: "/vendor/monst/img/placeholders/img-1.png",
-    icon: BookOpen
-  },
-  {
-    id: 2,
-    title: "Breaking Down Educational Barriers: Our Mission in Action",
-    excerpt: "How Smart Brain TLC is making quality education accessible to underserved communities through innovative sponsorship programs.",
-    category: "Education Equity",
-    date: "December 10, 2024",
-    readTime: "8 min read",
-    image: "/vendor/monst/img/placeholders/img-2.jpg",
-    icon: Heart
-  },
-  {
-    id: 3,
-    title: "From Struggle to Success: Maria's Transformation Story",
-    excerpt: "A sponsor shares how their contribution helped transform a student's academic journey and opened doors to new opportunities.",
-    category: "Sponsor Stories",
-    date: "December 8, 2024",
-    readTime: "6 min read",
-    image: "/vendor/monst/img/placeholders/img-3.jpg",
-    icon: Star
-  },
-  {
-    id: 4,
-    title: "Meet Sarah: The Tutor Making Math Fun for Elementary Students",
-    excerpt: "Get to know one of our dedicated tutors who's helping young learners develop confidence in mathematics through creative teaching methods.",
-    category: "Tutor Spotlights",
-    date: "December 5, 2024",
-    readTime: "4 min read",
-    image: "/vendor/monst/img/placeholders/img-4.jpg",
-    icon: Users
-  },
-  {
-    id: 5,
-    title: "Building Executive Function Skills in Middle School Students",
-    excerpt: "Learn practical strategies to help students develop time management, planning, and organizational skills that last a lifetime.",
-    category: "Learning Tips",
-    date: "December 3, 2024",
-    readTime: "7 min read",
-    image: "/vendor/monst/img/placeholders/img-5.jpg",
-    icon: BookOpen
-  },
-  {
-    id: 6,
-    title: "Q3 Impact Report: 1,200 Students Reached, 500 Sponsored Sessions",
-    excerpt: "See the numbers behind our mission: detailed statistics on student progress, sponsorship impact, and community growth.",
-    category: "Impact Reports",
-    date: "November 30, 2024",
-    readTime: "10 min read",
-    image: "/vendor/monst/img/placeholders/img-6.jpg",
-    icon: TrendingUp
-  }
-];
+
 
 const CATEGORIES = [
   { name: "Learning Tips", color: "bg-blue-100 text-blue-800", icon: BookOpen },
@@ -79,6 +21,8 @@ const CATEGORIES = [
 ];
 
 export default function Blog() {
+  const { blogs, isLoading, error } = useBlogs();
+
   useMetaTags({
     title: "Blog & Resources - Smart Brain TLC",
     description: "Explore resources, tips, and stories from Smart Brain TLC. Discover insights on education, learning strategies, and our impact on communities.",
@@ -136,56 +80,88 @@ export default function Blog() {
       <section className="py-16 lg:py-20">
         <div className="max-w-[1200px] mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {BLOG_POSTS.map((post, index) => {
-              const IconComponent = post.icon;
-              const categoryData = CATEGORIES.find(cat => cat.name === post.category);
-              
-              return (
-                <Reveal key={post.id} delay={index * 100}>
-                  <article className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] group">
-                    {/* Post Image */}
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <img 
-                        src={post.image} 
-                        alt={post.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <Badge 
-                          variant="secondary"
-                          className={`${categoryData?.color} px-3 py-1 rounded-full font-medium flex items-center gap-1.5`}
-                        >
-                          <IconComponent className="w-3 h-3" />
-                          {post.category}
-                        </Badge>
-                      </div>
-                    </div>
-
-                    {/* Post Content */}
-                    <div className="p-6">
-                      <div className="flex items-center gap-4 text-sm text-slate-500 mb-3">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          {post.date}
+            {isLoading ? (
+              <div className="col-span-full flex justify-center items-center py-20">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : error ? (
+              <div className="col-span-full text-center py-20 text-red-500">
+                Error loading posts. Please try again later.
+              </div>
+            ) : blogs.length === 0 ? (
+              <div className="col-span-full text-center py-20 text-slate-500">
+                No blog posts found.
+              </div>
+            ) : (
+              blogs.map((post, index) => {
+                const categoryData = CATEGORIES.find(cat => cat.name === post.category) || CATEGORIES[0];
+                const IconComponent = categoryData.icon;
+                
+                return (
+                  <Reveal key={post.id} delay={index * 100}>
+                    <article className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] group h-full flex flex-col">
+                      {/* Post Image */}
+                      <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+                        {post.featured_image ? (
+                          <img 
+                            src={post.featured_image} 
+                            alt={post.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-slate-400">
+                            <IconComponent className="w-12 h-12 opacity-50" />
+                          </div>
+                        )}
+                        <div className="absolute top-4 left-4">
+                          <Badge 
+                            variant="secondary"
+                            className={`${categoryData?.color} px-3 py-1 rounded-full font-medium flex items-center gap-1.5`}
+                          >
+                            <IconComponent className="w-3 h-3" />
+                            {post.category}
+                          </Badge>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          {post.readTime}
-                        </div>
                       </div>
 
-                      <h2 className="text-xl font-semibold text-slate-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                        {post.title}
-                      </h2>
-                      
-                      <p className="text-slate-600 line-clamp-3">
-                        {post.excerpt}
-                      </p>
-                    </div>
-                  </article>
-                </Reveal>
-              );
-            })}
+                      {/* Post Content */}
+                      <div className="p-6 flex flex-col flex-grow">
+                        <div className="flex items-center gap-4 text-sm text-slate-500 mb-3">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" />
+                            {post.publish_date ? format(new Date(post.publish_date), 'MMMM d, yyyy') : ''}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {post.read_time}
+                          </div>
+                        </div>
+
+                        <h2 className="text-xl font-semibold text-slate-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                          {post.title}
+                        </h2>
+                        
+                        <p className="text-slate-600 line-clamp-3 mb-4 flex-grow">
+                          {post.excerpt}
+                        </p>
+
+                        <div className="mt-auto pt-4">
+                          <Link to={`/blog/${post.slug}`} className="w-full block">
+                            <Button 
+                              variant="outline" 
+                              className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors group/btn"
+                            >
+                              Learn More
+                              <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>
+                    </article>
+                  </Reveal>
+                );
+              })
+            )}
           </div>
         </div>
       </section>

@@ -13,6 +13,7 @@ import Tutors from "./pages/Tutors";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Refund from "./pages/Refund";
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/sponsors" element={<Sponsors />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/find-tutors" element={<FindTutors />} />
           <Route path="/auth" element={<Auth />} />
