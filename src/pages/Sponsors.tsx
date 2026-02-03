@@ -5,7 +5,7 @@ import { useMetaTags } from '../hooks/useMetaTags';
 import studentsImage from '../assets/students-learning-together.jpg';
 import { Header } from '../components/Header';
 import Footer from '../components/Footer';
-import { useState } from 'react';
+
 
 const Sponsors = () => {
   useMetaTags({
@@ -14,59 +14,7 @@ const Sponsors = () => {
     url: "https://smartbrainlearning.org/sponsors",
   });
 
-  const [isLoadingType, setIsLoadingType] = useState<string | null>(null);
 
-  const handleStripeCheckout = async (
-    sponsorshipType: 'individual' | 'corporate' | 'school' | 'foundation',
-  ) => {
-    let amountInCents: number | undefined;
-
-    if (sponsorshipType === 'corporate' || sponsorshipType === 'school') {
-      const input = window.prompt('Enter sponsorship amount in USD (e.g., 100)', '100');
-      if (!input) return;
-
-      const parsed = Number(input);
-      if (Number.isNaN(parsed) || parsed <= 0) {
-        window.alert('Please enter a valid positive amount.');
-        return;
-      }
-
-      amountInCents = Math.round(parsed * 100);
-    }
-
-    try {
-      setIsLoadingType(sponsorshipType);
-
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          type: sponsorshipType,
-          amount: amountInCents,
-        }),
-      });
-
-      if (!response.ok) {
-        console.error('Failed to start checkout', await response.text());
-        window.alert('Unable to start checkout. Please try again.');
-        return;
-      }
-
-      const data = (await response.json()) as { url?: string };
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        window.alert('Unexpected response from payment server.');
-      }
-    } catch (error) {
-      console.error(error);
-      window.alert('An error occurred while starting checkout.');
-    } finally {
-      setIsLoadingType(null);
-    }
-  };
 
   return (
     <>
@@ -160,14 +108,7 @@ const Sponsors = () => {
                   A simple, powerful way to make an immediate impact
                 </li>
               </ul>
-              <button
-                type="button"
-                onClick={() => handleStripeCheckout('individual')}
-                disabled={isLoadingType === 'individual'}
-                className="mt-auto block w-full py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {isLoadingType === 'individual' ? 'Processing...' : 'Sponsor for $30'}
-              </button>
+
             </div>
 
             {/* 2. School Supplies Sponsorship */}
@@ -193,14 +134,7 @@ const Sponsors = () => {
                   Great option for individuals, families, and small groups
                 </li>
               </ul>
-              <button
-                type="button"
-                onClick={() => handleStripeCheckout('corporate')}
-                disabled={isLoadingType === 'corporate'}
-                className="mt-auto block w-full py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {isLoadingType === 'corporate' ? 'Processing...' : 'Give as a Company'}
-              </button>
+
             </div>
 
             {/* 3. Public School Funds Sponsorship */}
@@ -226,14 +160,7 @@ const Sponsors = () => {
                   Ideal for donors passionate about public education
                 </li>
               </ul>
-              <button
-                type="button"
-                onClick={() => handleStripeCheckout('school')}
-                disabled={isLoadingType === 'school'}
-                className="mt-auto block w-full py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {isLoadingType === 'school' ? 'Processing...' : 'Sponsor as a School/District'}
-              </button>
+
             </div>
 
             {/* 4. Monthly Sponsorship */}
@@ -259,18 +186,20 @@ const Sponsors = () => {
                   Flexible amount—give what fits your heart and budget
                 </li>
               </ul>
-              <button
-                type="button"
-                onClick={() => handleStripeCheckout('foundation')}
-                disabled={isLoadingType === 'foundation'}
-                className="mt-auto block w-full py-3 px-6 text-xs text-white text-center font-semibold leading-none bg-blue-400 hover:bg-blue-500 rounded transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {isLoadingType === 'foundation'
-                  ? 'Processing...'
-                  : 'Start $10/month Sponsorship'}
-              </button>
+
             </div>
           </Stagger>
+
+          <div className="mt-12 text-center">
+            <a
+              href="https://app.globalbrightfutures.org/auth/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block py-4 px-8 text-white font-semibold bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors shadow-lg hover:shadow-xl"
+            >
+              Start Sponsorship
+            </a>
+          </div>
         </div>
       </section>
 
