@@ -40,6 +40,7 @@ export const TestimonialsCarousel: React.FC = () => {
   const [isDesktop, setIsDesktop] = useState(false);
   const [testimonialSlides, setTestimonialSlides] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [expandedSlide, setExpandedSlide] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -48,10 +49,15 @@ export const TestimonialsCarousel: React.FC = () => {
         const slides = reviews.map((r, i) => ({
           id: r.id, 
           image: r.avatarUrl || `/vendor/monst/img/placeholders/img-${(i % 4) + 1}.jpg`, // Fallback
-          title: `“${r.content.substring(0, 60)}${r.content.length > 60 ? '...' : ''}”`,
+          title: `"${r.content.substring(0, 60)}${r.content.length > 60 ? '...' : ''}"`,
           company: `${r.name} · ${r.role} ${r.location ? `· ${r.location}` : ''}`,
           alt: `${r.name} testimonial`,
-          rating: r.rating
+          rating: r.rating,
+          fullContent: r.content,
+          name: r.name,
+          role: r.role,
+          location: r.location,
+          date: r.date
         }));
         setTestimonialSlides(slides);
       } catch (err) {
@@ -73,6 +79,18 @@ export const TestimonialsCarousel: React.FC = () => {
     
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
+
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && expandedSlide !== null) {
+        setExpandedSlide(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [expandedSlide]);
 
   const nextSlide = () => {
     if (testimonialSlides.length === 0) return;
@@ -123,10 +141,11 @@ export const TestimonialsCarousel: React.FC = () => {
                 className="flex gap-8 transition-transform duration-500 ease-out"
                 style={{transform: `translateX(${getTransformValue()})`}}
               >
-                {testimonialSlides.map((slide) => (
+                {testimonialSlides.map((slide, index) => (
                   <article 
                     key={slide.id}
-                    className="w-full lg:w-1/2 shrink-0 rounded-3xl bg-white border border-slate-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 p-6"
+                    onClick={() => setExpandedSlide(index)}
+                    className="w-full lg:w-1/2 shrink-0 rounded-3xl bg-white border border-slate-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 p-6 cursor-pointer"
                   >
                     <div className="overflow-hidden rounded-xl">
                       <img 
@@ -141,6 +160,12 @@ export const TestimonialsCarousel: React.FC = () => {
                         <p className="mt-1 text-sm text-slate-500">{slide.company}</p>
                       </div>
                       <Stars value={slide.rating ?? 5} />
+                    </div>
+                    <div className="mt-4 flex items-center gap-2 text-[#2563EB] text-sm font-medium">
+                      <span>Click to read more</span>
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="M9 5l7 7-7 7"/>
+                      </svg>
                     </div>
                   </article>
                 ))}
@@ -188,6 +213,78 @@ export const TestimonialsCarousel: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Expanded Modal */}
+        {expandedSlide !== null && testimonialSlides[expandedSlide] && (
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in"
+            onClick={() => setExpandedSlide(null)}
+          >
+            <div 
+              className="relative max-w-3xl w-full bg-white rounded-3xl shadow-2xl p-8 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setExpandedSlide(null)}
+                className="absolute top-6 right-6 h-10 w-10 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+                aria-label="Close modal"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+
+              {/* Content */}
+              <div className="flex flex-col md:flex-row gap-6">
+                {/* Image */}
+                <div className="md:w-1/3 shrink-0">
+                  <div className="overflow-hidden rounded-xl">
+                    <img 
+                      src={testimonialSlides[expandedSlide].image}
+                      alt={testimonialSlides[expandedSlide].alt}
+                      className="w-full h-64 md:h-full object-cover bg-gray-100"
+                    />
+                  </div>
+                </div>
+
+                {/* Details */}
+                <div className="flex-1">
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        {testimonialSlides[expandedSlide].name}
+                      </h3>
+                      <p className="text-slate-600 mt-1">
+                        {testimonialSlides[expandedSlide].role}
+                        {testimonialSlides[expandedSlide].location && (
+                          <> · {testimonialSlides[expandedSlide].location}</>
+                        )}
+                      </p>
+                      {testimonialSlides[expandedSlide].date && (
+                        <p className="text-sm text-slate-400 mt-1">
+                          {new Date(testimonialSlides[expandedSlide].date).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                          })}
+                        </p>
+                      )}
+                    </div>
+                    <Stars value={testimonialSlides[expandedSlide].rating ?? 5} />
+                  </div>
+
+                  {/* Full content */}
+                  <div className="prose prose-slate max-w-none">
+                    <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">
+                      "{testimonialSlides[expandedSlide].fullContent}"
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
