@@ -192,7 +192,7 @@ const Sponsors = () => {
 
           <div className="mt-12 text-center">
             <a
-              href="https://app.globalbrightfutures.org/auth/login"
+              href="https://app.smartbrainlearning.org/login"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block py-4 px-8 text-white font-semibold bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors shadow-lg hover:shadow-xl"

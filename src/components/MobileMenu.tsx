@@ -194,20 +194,20 @@ export function MobileMenu({
 
           {/* Action Buttons */}
           <div className="mt-8 space-y-3">
-            <Link
-              to="/auth"
+            <a
+              href="https://app.smartbrainlearning.org/login"
               className="block w-full px-4 py-3 text-center font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-lg"
               onClick={onClose}
             >
               Sign Up
-            </Link>
-            <Link
-              to="/auth"
+            </a>
+            <a
+              href="https://app.smartbrainlearning.org/login"
               className="block w-full px-4 py-3 text-center text-blue-500 hover:text-blue-700 font-semibold border border-blue-200 hover:border-blue-300 rounded-lg"
               onClick={onClose}
             >
               Log In
-            </Link>
+            </a>
           </div>
 
           {/* Footer */}
