@@ -193,18 +193,20 @@ export default function About() {
                     Our Story
                   </span>
                   <h2 className="text-3xl md:text-4xl mb-6 font-bold font-heading">
-                    <span className="text-blue-500">Smart Brain TLC Inc.</span>
+                    Our <span className="text-blue-500">Story</span>
                   </h2>
-                  {/* Only the new first paragraph visible */}
-                  <p className="text-blueGray-400 leading-relaxed mb-6">
-                    Smart Brain TLC Inc. was built from a story of resilience,
-                    compassion, and the belief that every child—no matter their
-                    background—deserves a chance to succeed. Founded by educator
-                    Ilyne Cendy Root, who overcame early hardship through
-                    courage, creativity, and education, Smart Brain TLC carries
-                    forward her lifelong mission: to make learning personal,
-                    accessible, and transformative.
-                  </p>
+                  <div className="space-y-6 text-blueGray-400 leading-relaxed mb-6">
+                    <p>
+                      Smart Brain TLC Inc. was built from a story of resilience,
+                      compassion, and the belief that every child deserves
+                      access to quality education. Through years of experience
+                      working with diverse learners—including students with
+                      autism, ADHD, and those from different cultural
+                      backgrounds—it became clear that students thrive when they
+                      are supported, understood, and believed in.
+                    </p>
+                  </div>
+
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button className="bg-blue-100 text-blue-700 hover:bg-blue-200 px-6 py-2 rounded-lg font-semibold">
@@ -214,57 +216,65 @@ export default function About() {
                     <DialogContent className="z-[1000] max-w-3xl w-[95vw] h-[85vh] p-0 overflow-hidden flex flex-col">
                       <ScrollArea className="p-8 h-full">
                         <h2 className="text-2xl md:text-3xl font-bold font-heading mb-6 text-blue-600">
-                          About Smart Brain TLC & Founder
+                          Our Story & Vision
                         </h2>
                         <div className="space-y-5 text-blueGray-700 text-base leading-relaxed">
                           <p>
                             Smart Brain TLC Inc. was built from a story of
                             resilience, compassion, and the belief that every
-                            child—no matter their background—deserves a chance
-                            to succeed. Founded by educator Ilyne Cendy Root,
-                            who overcame early hardship through courage,
-                            creativity, and education, Smart Brain TLC carries
-                            forward her lifelong mission: to make learning
-                            personal, accessible, and transformative.
+                            child deserves access to quality education. Through
+                            years of experience working with diverse
+                            learners—including students with autism, ADHD, and
+                            those from different cultural backgrounds—it became
+                            clear that students thrive when they are supported,
+                            understood, and believed in.
                           </p>
                           <p>
-                            From teaching learners with autism and ADHD, to
-                            tutoring students across Asia, to serving schools in
-                            the United States, Ilyne discovered one truth:
-                            students thrive when someone believes in them.
-                            Guided by this conviction, Smart Brain TLC provides
-                            high-quality, affordable 1-on-1 tutoring for both
-                            private students and underserved learners who need
-                            extra care and individualized support.
+                            Smart Brain TLC provides high-quality, affordable
+                            one-on-one tutoring for both private students and
+                            underserved learners who need individualized support
+                            and care.
                           </p>
                           <p>
                             What began as a small tutoring effort has grown into
                             an international education initiative powered by
                             passion, purpose, and community. Through programs
                             like Enroll One, Empower Two, Smart Brain TLC
-                            connects students from around the world, ensuring
-                            that enrolling one child helps uplift another with
-                            limited resources.
+                            connects learners globally—ensuring that when one
+                            student enrolls, another child with limited
+                            resources also receives support.
                           </p>
                           <p>
                             Today, Smart Brain TLC partners with schools,
                             families, and organizations to deliver tutoring,
-                            literacy support, early childhood programs, and
-                            mentorship—always grounded in empathy, excellence,
-                            and heart.
+                            literacy programs, early childhood education, and
+                            mentorship always guided by empathy, excellence, and
+                            heart.
                           </p>
-                          <p>
-                            <strong>Our work reflects a simple promise:</strong>
-                          </p>
-                          <ul className="list-disc ml-5 space-y-1">
-                            <li>Every learner can shine.</li>
-                            <li>Every learner deserves a chance.</li>
-                            <li>Every learner matters.</li>
-                          </ul>
-                          <p className="font-semibold text-blue-800">
-                            Smart Brain TLC exists to make that promise a
-                            reality.
-                          </p>
+
+                          <div className="bg-blue-50 p-8 rounded-2xl border border-blue-100 mt-8 relative overflow-hidden">
+                            <h3 className="text-xl font-bold font-heading mb-4 text-blue-700">
+                              Our Promise
+                            </h3>
+                            <ul className="space-y-3">
+                              <li className="flex items-center text-blueGray-700">
+                                <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                                Every learner can shine.
+                              </li>
+                              <li className="flex items-center text-blueGray-700">
+                                <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                                Every learner deserves a chance.
+                              </li>
+                              <li className="flex items-center text-blueGray-700">
+                                <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                                Every learner matters.
+                              </li>
+                            </ul>
+                            <p className="mt-6 font-semibold text-blue-900">
+                              Smart Brain TLC exists to make that promise a
+                              reality.
+                            </p>
+                          </div>
                         </div>
                       </ScrollArea>
                     </DialogContent>
@@ -278,7 +288,7 @@ export default function About() {
                   <img
                     className="mx-auto rounded-lg shadow-lg max-w-full h-auto"
                     src={studentsImage}
-                    alt="Our founder's vision"
+                    alt="Smart Brain TLC mission and story"
                   />
                 </div>
               </Reveal>
