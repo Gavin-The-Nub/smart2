@@ -221,11 +221,7 @@ const Sponsors = () => {
               Every enrollment funds a brighter future
             </h2>
           </Reveal>
-          <Reveal delay={200}>
-            <p className="max-w-2xl mx-auto text-lg text-blue-100 mb-8">
-              Whether you're a parent, business owner, educator, or philanthropist, partnering with Smart Brain TLC gives you a meaningful way to invest in education and equity.
-            </p>
-          </Reveal>
+
           <Reveal delay={400}>
             <a
               href="http://globalbrightfutures.org/"
